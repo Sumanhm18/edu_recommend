@@ -1,0 +1,529 @@
+{
+	"info": {
+		"name": "Education MVP - Career & Education Advisor APIs",
+		"description": "Complete API collection for testing the Education MVP backend services including authentication, user management, and all core features.",
+		"version": "1.0.0",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080",
+			"type": "string"
+		},
+		{
+			"key": "authToken",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "guestToken",
+			"value": "",
+			"type": "string"
+		}
+	],
+	"item": [
+		{
+			"name": "🔐 Authentication APIs",
+			"item": [
+				{
+					"name": "1. Health Check - Auth Service",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/test",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "auth", "test"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2. Guest Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    const response = pm.response.json();",
+									"    if (response.success && response.data && response.data.token) {",
+									"        pm.collectionVariables.set('guestToken', response.data.token);",
+									"        console.log('Guest token saved:', response.data.token);",
+									"    }",
+									"}"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/guest-login",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "auth", "guest-login"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "3. Send OTP",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"phoneNumber\": \"9876543210\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/send-otp",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "auth", "send-otp"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "4. Verify OTP & Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    const response = pm.response.json();",
+									"    if (response.success && response.data && response.data.token) {",
+									"        pm.collectionVariables.set('authToken', response.data.token);",
+									"        console.log('Auth token saved:', response.data.token);",
+									"    }",
+									"}"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"phoneNumber\": \"9876543210\",\n    \"otp\": \"123456\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/verify-otp",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "auth", "verify-otp"]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "👤 User Profile APIs",
+			"item": [
+				{
+					"name": "1. Get Current User Profile",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/user/profile",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "user", "profile"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2. Update User Profile",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"John Doe\",\n    \"classLevel\": \"12th\",\n    \"district\": \"Bangalore Urban\",\n    \"preferredLanguage\": \"English\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/user/profile",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "user", "profile"]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "📝 Quiz APIs",
+			"item": [
+				{
+					"name": "1. Get Available Quizzes",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/quiz/available",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "quiz", "available"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2. Get Quiz Questions",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/quiz/1/questions",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "quiz", "1", "questions"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "3. Submit Quiz Answers",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"quizId\": 1,\n    \"answers\": [\n        {\"questionId\": 1, \"selectedOption\": \"A\"},\n        {\"questionId\": 2, \"selectedOption\": \"B\"},\n        {\"questionId\": 3, \"selectedOption\": \"C\"}\n    ]\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/quiz/submit",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "quiz", "submit"]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "🏫 College Directory APIs",
+			"item": [
+				{
+					"name": "1. Search Colleges by District",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/colleges/search?district=Bangalore Urban",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "colleges", "search"],
+							"query": [
+								{
+									"key": "district",
+									"value": "Bangalore Urban"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2. Get College Details",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/colleges/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "colleges", "1"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "3. Get Nearby Colleges",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/colleges/nearby?latitude=12.9716&longitude=77.5946&radius=50",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "colleges", "nearby"],
+							"query": [
+								{
+									"key": "latitude",
+									"value": "12.9716"
+								},
+								{
+									"key": "longitude",
+									"value": "77.5946"
+								},
+								{
+									"key": "radius",
+									"value": "50"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "📚 Course & Career APIs",
+			"item": [
+				{
+					"name": "1. Get Courses by Stream",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/courses/stream/Science",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "courses", "stream", "Science"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2. Get Career Paths for Course",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/courses/1/career-paths",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "courses", "1", "career-paths"]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "🔔 Notification APIs",
+			"item": [
+				{
+					"name": "1. Get User Notifications",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/notifications",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "notifications"]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "🛡️ Admin APIs",
+			"item": [
+				{
+					"name": "1. Admin Login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"admin@education.gov.in\",\n    \"password\": \"admin123\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/admin/login",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "admin", "login"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2. Get All Users (Admin Only)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/admin/users",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "admin", "users"]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "🌐 Public APIs (No Auth Required)",
+			"item": [
+				{
+					"name": "1. Get Districts List",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/public/districts",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "public", "districts"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2. Get Languages List",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/public/languages",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "public", "languages"]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

@@ -1,0 +1,444 @@
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::staticFieldBase has been called by com.google.inject.internal.aop.HiddenClassDefiner (file:/Users/sumanhm/.m2/wrapper/dists/apache-maven-3.9.11/a2d47e15/lib/guice-5.1.0-classes.jar)
+WARNING: Please consider reporting this to the maintainers of class com.google.inject.internal.aop.HiddenClassDefiner
+WARNING: sun.misc.Unsafe::staticFieldBase will be removed in a future release
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ----------------------< com.education:education >-----------------------
+[INFO] Building education 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] >>> spring-boot:3.5.5:run (default-cli) > test-compile @ education >>>
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ education ---
+[INFO] Copying 1 resource from src/main/resources to target/classes
+[INFO] Copying 0 resource from src/main/resources to target/classes
+[INFO] 
+[INFO] --- compiler:3.14.0:compile (default-compile) @ education ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ education ---
+[INFO] skip non existing resourceDirectory /Users/sumanhm/Downloads/education/src/test/resources
+[INFO] 
+[INFO] --- compiler:3.14.0:testCompile (default-testCompile) @ education ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] <<< spring-boot:3.5.5:run (default-cli) < test-compile @ education <<<
+[INFO] 
+[INFO] 
+[INFO] --- spring-boot:3.5.5:run (default-cli) @ education ---
+[INFO] Attaching agents: []
+Standard Commons Logging discovery in action with spring-jcl: please remove commons-logging.jar from classpath in order to avoid potential conflicts
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.5.5)
+
+2025-09-18T04:20:29.115+05:30  INFO 53949 --- [education] [           main] c.e.education.EducationApplication       : Starting EducationApplication using Java 24.0.2 with PID 53949 (/Users/sumanhm/Downloads/education/target/classes started by sumanhm in /Users/sumanhm/Downloads/education)
+2025-09-18T04:20:29.116+05:30 DEBUG 53949 --- [education] [           main] c.e.education.EducationApplication       : Running with Spring Boot v3.5.5, Spring v6.2.10
+2025-09-18T04:20:29.116+05:30  INFO 53949 --- [education] [           main] c.e.education.EducationApplication       : No active profile set, falling back to 1 default profile: "default"
+2025-09-18T04:20:29.330+05:30  INFO 53949 --- [education] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-09-18T04:20:29.379+05:30  INFO 53949 --- [education] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 45 ms. Found 4 JPA repository interfaces.
+2025-09-18T04:20:29.540+05:30  INFO 53949 --- [education] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-09-18T04:20:29.545+05:30  INFO 53949 --- [education] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-09-18T04:20:29.545+05:30  INFO 53949 --- [education] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.44]
+2025-09-18T04:20:29.562+05:30  INFO 53949 --- [education] [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-09-18T04:20:29.562+05:30  INFO 53949 --- [education] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 431 ms
+Standard Commons Logging discovery in action with spring-jcl: please remove commons-logging.jar from classpath in order to avoid potential conflicts
+2025-09-18T04:20:29.577+05:30 DEBUG 53949 --- [education] [           main] c.e.education.config.JwtRequestFilter    : Filter 'jwtRequestFilter' configured for use
+2025-09-18T04:20:29.611+05:30  INFO 53949 --- [education] [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-09-18T04:20:29.624+05:30  INFO 53949 --- [education] [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.26.Final
+2025-09-18T04:20:29.631+05:30  INFO 53949 --- [education] [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-09-18T04:20:29.711+05:30  INFO 53949 --- [education] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-09-18T04:20:29.718+05:30  INFO 53949 --- [education] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-09-18T04:20:29.769+05:30  INFO 53949 --- [education] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@279c4e3b
+2025-09-18T04:20:29.770+05:30  INFO 53949 --- [education] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-09-18T04:20:29.780+05:30  WARN 53949 --- [education] [           main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-09-18T04:20:29.785+05:30  INFO 53949 --- [education] [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 17.6
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-09-18T04:20:30.104+05:30  INFO 53949 --- [education] [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-09-18T04:20:30.256+05:30  INFO 53949 --- [education] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-09-18T04:20:30.339+05:30  INFO 53949 --- [education] [           main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-09-18T04:20:30.809+05:30  WARN 53949 --- [education] [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-09-18T04:20:30.856+05:30 DEBUG 53949 --- [education] [           main] swordEncoderAuthenticationManagerBuilder : No authenticationProviders and no parentAuthenticationManager defined. Returning null.
+2025-09-18T04:20:30.881+05:30 DEBUG 53949 --- [education] [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with filters: DisableEncodeUrlFilter, WebAsyncManagerIntegrationFilter, SecurityContextHolderFilter, HeaderWriterFilter, CorsFilter, LogoutFilter, RequestCacheAwareFilter, SecurityContextHolderAwareRequestFilter, AnonymousAuthenticationFilter, SessionManagementFilter, ExceptionTranslationFilter, AuthorizationFilter
+2025-09-18T04:20:30.921+05:30  WARN 53949 --- [education] [           main] ion$DefaultTemplateResolverConfiguration : Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::allocateMemory has been called by io.netty.util.internal.PlatformDependent0$2 (file:/Users/sumanhm/.m2/repository/io/netty/netty-common/4.1.124.Final/netty-common-4.1.124.Final.jar)
+WARNING: Please consider reporting this to the maintainers of class io.netty.util.internal.PlatformDependent0$2
+WARNING: sun.misc.Unsafe::allocateMemory will be removed in a future release
+2025-09-18T04:20:30.986+05:30  INFO 53949 --- [education] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-09-18T04:20:30.989+05:30  INFO 53949 --- [education] [           main] c.e.education.EducationApplication       : Started EducationApplication in 1.988 seconds (process running for 2.095)
+2025-09-18T04:20:31.015+05:30 DEBUG 53949 --- [education] [           main] org.hibernate.SQL                        : 
+    /* select
+        count(*) 
+    from
+        College x */ select
+            count(*) 
+        from
+            colleges c1_0
+College data already exists. Skipping initialization.
+2025-09-18T04:20:31.020+05:30 DEBUG 53949 --- [education] [           main] org.hibernate.SQL                        : 
+    /* select
+        count(*) 
+    from
+        Quiz x */ select
+            count(*) 
+        from
+            quizzes q1_0
+2025-09-18T04:20:59.384+05:30  INFO 53949 --- [education] [nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-09-18T04:20:59.384+05:30  INFO 53949 --- [education] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-09-18T04:20:59.385+05:30  INFO 53949 --- [education] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
+2025-09-18T04:20:59.390+05:30 DEBUG 53949 --- [education] [nio-8080-exec-1] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/register
+2025-09-18T04:20:59.392+05:30 DEBUG 53949 --- [education] [nio-8080-exec-1] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2025-09-18T04:20:59.392+05:30 DEBUG 53949 --- [education] [nio-8080-exec-1] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/register
+2025-09-18T04:20:59.420+05:30 DEBUG 53949 --- [education] [nio-8080-exec-1] org.hibernate.SQL                        : 
+    /* <criteria> */ select
+        u1_0.user_id,
+        u1_0.class_level,
+        u1_0.created_at,
+        u1_0.district,
+        u1_0.is_guest,
+        u1_0.name,
+        u1_0.password,
+        u1_0.phone,
+        u1_0.preferred_language,
+        u1_0.role,
+        u1_0.updated_at 
+    from
+        users u1_0 
+    where
+        u1_0.phone=?
+2025-09-18T04:20:59.426+05:30 DEBUG 53949 --- [education] [nio-8080-exec-1] org.hibernate.SQL                        : 
+    /* <criteria> */ select
+        u1_0.user_id,
+        u1_0.class_level,
+        u1_0.created_at,
+        u1_0.district,
+        u1_0.is_guest,
+        u1_0.name,
+        u1_0.password,
+        u1_0.phone,
+        u1_0.preferred_language,
+        u1_0.role,
+        u1_0.updated_at 
+    from
+        users u1_0 
+    where
+        u1_0.phone=?
+2025-09-18T04:20:59.498+05:30 DEBUG 53949 --- [education] [nio-8080-exec-1] org.hibernate.SQL                        : 
+    /* insert for
+        com.education.education.entity.User */insert 
+    into
+        users (class_level, created_at, district, is_guest, name, password, phone, preferred_language, role, updated_at) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2025-09-18T04:21:05.428+05:30 DEBUG 53949 --- [education] [nio-8080-exec-2] o.s.security.web.FilterChainProxy        : Securing GET /api/quiz/available
+2025-09-18T04:21:05.428+05:30 DEBUG 53949 --- [education] [nio-8080-exec-2] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2025-09-18T04:21:05.428+05:30 DEBUG 53949 --- [education] [nio-8080-exec-2] o.s.security.web.FilterChainProxy        : Secured GET /api/quiz/available
+2025-09-18T04:21:05.442+05:30 DEBUG 53949 --- [education] [nio-8080-exec-2] org.hibernate.SQL                        : 
+    /* SELECT
+        q 
+    FROM
+        Quiz q 
+    WHERE
+        q.isActive = true 
+        AND (
+            q.targetClass = :targetClass 
+            OR q.targetClass = 'all'
+        ) */ select
+            q1_0.quiz_id,
+            q1_0.created_at,
+            q1_0.description,
+            q1_0.is_active,
+            q1_0.questions_json,
+            q1_0.target_class,
+            q1_0.title,
+            q1_0.updated_at 
+        from
+            quizzes q1_0 
+        where
+            q1_0.is_active=true 
+            and (
+                q1_0.target_class=? 
+                or q1_0.target_class='all'
+            )
+2025-09-18T04:21:05.451+05:30 DEBUG 53949 --- [education] [nio-8080-exec-2] org.hibernate.SQL                        : 
+    select
+        a1_0.quiz_id,
+        a1_0.attempt_id,
+        a1_0.answers_json,
+        a1_0.recommended_streams,
+        a1_0.score,
+        a1_0.timestamp,
+        a1_0.user_id 
+    from
+        quiz_attempts a1_0 
+    where
+        a1_0.quiz_id=?
+2025-09-18T04:21:05.458+05:30 DEBUG 53949 --- [education] [nio-8080-exec-2] org.hibernate.SQL                        : 
+    select
+        u1_0.user_id,
+        u1_0.class_level,
+        u1_0.created_at,
+        u1_0.district,
+        u1_0.is_guest,
+        u1_0.name,
+        u1_0.password,
+        u1_0.phone,
+        u1_0.preferred_language,
+        u1_0.role,
+        u1_0.updated_at 
+    from
+        users u1_0 
+    where
+        u1_0.user_id=?
+2025-09-18T04:21:05.460+05:30 DEBUG 53949 --- [education] [nio-8080-exec-2] org.hibernate.SQL                        : 
+    select
+        qa1_0.user_id,
+        qa1_0.attempt_id,
+        qa1_0.answers_json,
+        qa1_0.quiz_id,
+        qa1_0.recommended_streams,
+        qa1_0.score,
+        qa1_0.timestamp 
+    from
+        quiz_attempts qa1_0 
+    where
+        qa1_0.user_id=?
+2025-09-18T04:21:05.468+05:30  WARN 53949 --- [education] [nio-8080-exec-2] .w.s.m.s.DefaultHandlerExceptionResolver : Ignoring exception, response committed already: org.springframework.http.converter.HttpMessageNotWritableException: Could not write JSON: Document nesting depth (1001) exceeds the maximum allowed (1000, from `StreamWriteConstraints.getMaxNestingDepth()`)
+2025-09-18T04:21:05.469+05:30  WARN 53949 --- [education] [nio-8080-exec-2] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.http.converter.HttpMessageNotWritableException: Could not write JSON: Document nesting depth (1001) exceeds the maximum allowed (1000, from `StreamWriteConstraints.getMaxNestingDepth()`)]
+2025-09-18T04:21:28.645+05:30 DEBUG 53949 --- [education] [nio-8080-exec-4] o.s.security.web.FilterChainProxy        : Securing POST /api/quiz/submit-with-ai
+2025-09-18T04:21:28.646+05:30 DEBUG 53949 --- [education] [nio-8080-exec-4] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2025-09-18T04:21:28.646+05:30 DEBUG 53949 --- [education] [nio-8080-exec-4] o.s.security.web.FilterChainProxy        : Secured POST /api/quiz/submit-with-ai
+Submitting quiz for userId: 12, quizId: 1
+2025-09-18T04:21:28.656+05:30 DEBUG 53949 --- [education] [nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        q1_0.quiz_id,
+        q1_0.created_at,
+        q1_0.description,
+        q1_0.is_active,
+        q1_0.questions_json,
+        q1_0.target_class,
+        q1_0.title,
+        q1_0.updated_at 
+    from
+        quizzes q1_0 
+    where
+        q1_0.quiz_id=?
+2025-09-18T04:21:28.659+05:30 DEBUG 53949 --- [education] [nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        u1_0.user_id,
+        u1_0.class_level,
+        u1_0.created_at,
+        u1_0.district,
+        u1_0.is_guest,
+        u1_0.name,
+        u1_0.password,
+        u1_0.phone,
+        u1_0.preferred_language,
+        u1_0.role,
+        u1_0.updated_at 
+    from
+        users u1_0 
+    where
+        u1_0.user_id=?
+2025-09-18T04:21:28.662+05:30 DEBUG 53949 --- [education] [nio-8080-exec-4] org.hibernate.SQL                        : 
+    /* insert for
+        com.education.education.entity.QuizAttempt */insert 
+    into
+        quiz_attempts (answers_json, quiz_id, recommended_streams, score, timestamp, user_id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+Quiz submission successful, result: com.education.education.dto.QuizResultDto@5eaf1194
+Calling Gemini AI service...
+Error getting college recommendations from Gemini: 429 Too Many Requests on POST request for "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent": "{<EOL>  "error": {<EOL>    "code": 429,<EOL>    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 50\nPlease retry in 29.587812995s.",<EOL>    "status": "RESOURCE_EXHAUSTED",<EOL>    "details": [<EOL>      {<EOL>        "@type": "type.googleapis.com/google.rpc.QuotaFailure",<EOL>        "violations": [<EOL>          {<EOL>            "quotaMetric": "generativelanguage.googleapis.com/generate_content_free_tier_requests",<EOL>            "quotaId": "GenerateRequestsPerDayPerProjectPerModel-FreeTier",<EOL>            "quotaDimensions": {<EOL>              "location": "global",<EOL>              "model": "gemini-1.5-flash"<EOL>            },<EOL>            "quotaValue": "50"<EOL>          }<EOL>        ]<EOL>      },<EOL>      {<EOL>        "@type": "type.googleapis.com/google.rpc.Help",<EOL>        "links": [<EOL>          {<EOL>            "description": "Learn more about Gemini API quotas",<EOL>            "url": "https://ai.google.dev/gemini-api/docs/rate-limits"<EOL>          }<EOL>        ]<EOL>      },<EOL>      {<EOL>        "@type": "type.googleapis.com/google.rpc.RetryInfo",<EOL>        "retryDelay": "29s"<EOL>      }<EOL>    ]<EOL>  }<EOL>}<EOL>"
+AI recommendations received
+2025-09-18T04:22:36.212+05:30 DEBUG 53949 --- [education] [nio-8080-exec-6] o.s.security.web.FilterChainProxy        : Securing GET /api/quiz/recommendations-summary
+2025-09-18T04:22:36.212+05:30 DEBUG 53949 --- [education] [nio-8080-exec-6] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2025-09-18T04:22:36.212+05:30 DEBUG 53949 --- [education] [nio-8080-exec-6] o.s.security.web.FilterChainProxy        : Secured GET /api/quiz/recommendations-summary
+2025-09-18T04:22:36.213+05:30 ERROR 53949 --- [education] [nio-8080-exec-6] c.e.education.config.JwtRequestFilter    : Unable to get JWT Token or token is expired
+2025-09-18T04:22:36.215+05:30  WARN 53949 --- [education] [nio-8080-exec-6] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.method.annotation.MethodArgumentTypeMismatchException: Method parameter 'quizId': Failed to convert value of type 'java.lang.String' to required type 'java.lang.Long'; For input string: "recommendations-summary"]
+2025-09-18T04:22:36.217+05:30 DEBUG 53949 --- [education] [nio-8080-exec-6] o.s.security.web.FilterChainProxy        : Securing GET /error
+2025-09-18T04:22:36.217+05:30 DEBUG 53949 --- [education] [nio-8080-exec-6] o.s.security.web.FilterChainProxy        : Secured GET /error
+2025-09-18T04:22:36.218+05:30 DEBUG 53949 --- [education] [nio-8080-exec-6] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2025-09-18T04:22:44.318+05:30 DEBUG 53949 --- [education] [nio-8080-exec-8] o.s.security.web.FilterChainProxy        : Securing GET /api/quiz/recommendations-summary
+2025-09-18T04:22:44.318+05:30 DEBUG 53949 --- [education] [nio-8080-exec-8] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2025-09-18T04:22:44.318+05:30 DEBUG 53949 --- [education] [nio-8080-exec-8] o.s.security.web.FilterChainProxy        : Secured GET /api/quiz/recommendations-summary
+2025-09-18T04:22:44.320+05:30  WARN 53949 --- [education] [nio-8080-exec-8] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.method.annotation.MethodArgumentTypeMismatchException: Method parameter 'quizId': Failed to convert value of type 'java.lang.String' to required type 'java.lang.Long'; For input string: "recommendations-summary"]
+2025-09-18T04:22:44.320+05:30 DEBUG 53949 --- [education] [nio-8080-exec-8] o.s.security.web.FilterChainProxy        : Securing GET /error
+2025-09-18T04:22:44.320+05:30 DEBUG 53949 --- [education] [nio-8080-exec-8] o.s.security.web.FilterChainProxy        : Secured GET /error
+2025-09-18T04:22:44.320+05:30 DEBUG 53949 --- [education] [nio-8080-exec-8] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2025-09-18T04:23:03.286+05:30 DEBUG 53949 --- [education] [nio-8080-exec-7] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/register
+2025-09-18T04:23:03.286+05:30 DEBUG 53949 --- [education] [nio-8080-exec-7] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2025-09-18T04:23:03.286+05:30 DEBUG 53949 --- [education] [nio-8080-exec-7] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/register
+2025-09-18T04:23:08.986+05:30 DEBUG 53949 --- [education] [nio-8080-exec-9] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/register
+2025-09-18T04:23:08.986+05:30 DEBUG 53949 --- [education] [nio-8080-exec-9] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2025-09-18T04:23:08.986+05:30 DEBUG 53949 --- [education] [nio-8080-exec-9] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/register
+2025-09-18T04:23:08.987+05:30 DEBUG 53949 --- [education] [nio-8080-exec-9] org.hibernate.SQL                        : 
+    /* <criteria> */ select
+        u1_0.user_id,
+        u1_0.class_level,
+        u1_0.created_at,
+        u1_0.district,
+        u1_0.is_guest,
+        u1_0.name,
+        u1_0.password,
+        u1_0.phone,
+        u1_0.preferred_language,
+        u1_0.role,
+        u1_0.updated_at 
+    from
+        users u1_0 
+    where
+        u1_0.phone=?
+2025-09-18T04:23:23.672+05:30 DEBUG 53949 --- [education] [io-8080-exec-10] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/register
+2025-09-18T04:23:23.672+05:30 DEBUG 53949 --- [education] [io-8080-exec-10] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2025-09-18T04:23:23.672+05:30 DEBUG 53949 --- [education] [io-8080-exec-10] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/register
+2025-09-18T04:23:23.673+05:30 DEBUG 53949 --- [education] [io-8080-exec-10] org.hibernate.SQL                        : 
+    /* <criteria> */ select
+        u1_0.user_id,
+        u1_0.class_level,
+        u1_0.created_at,
+        u1_0.district,
+        u1_0.is_guest,
+        u1_0.name,
+        u1_0.password,
+        u1_0.phone,
+        u1_0.preferred_language,
+        u1_0.role,
+        u1_0.updated_at 
+    from
+        users u1_0 
+    where
+        u1_0.phone=?
+2025-09-18T04:23:23.674+05:30 DEBUG 53949 --- [education] [io-8080-exec-10] org.hibernate.SQL                        : 
+    /* <criteria> */ select
+        u1_0.user_id,
+        u1_0.class_level,
+        u1_0.created_at,
+        u1_0.district,
+        u1_0.is_guest,
+        u1_0.name,
+        u1_0.password,
+        u1_0.phone,
+        u1_0.preferred_language,
+        u1_0.role,
+        u1_0.updated_at 
+    from
+        users u1_0 
+    where
+        u1_0.phone=?
+2025-09-18T04:23:23.738+05:30 DEBUG 53949 --- [education] [io-8080-exec-10] org.hibernate.SQL                        : 
+    /* insert for
+        com.education.education.entity.User */insert 
+    into
+        users (class_level, created_at, district, is_guest, name, password, phone, preferred_language, role, updated_at) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2025-09-18T04:23:34.241+05:30 DEBUG 53949 --- [education] [nio-8080-exec-2] o.s.security.web.FilterChainProxy        : Securing POST /api/quiz/submit-with-ai
+2025-09-18T04:23:34.242+05:30 DEBUG 53949 --- [education] [nio-8080-exec-2] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2025-09-18T04:23:34.242+05:30 DEBUG 53949 --- [education] [nio-8080-exec-2] o.s.security.web.FilterChainProxy        : Secured POST /api/quiz/submit-with-ai
+Submitting quiz for userId: 13, quizId: 1
+2025-09-18T04:23:34.247+05:30 DEBUG 53949 --- [education] [nio-8080-exec-2] org.hibernate.SQL                        : 
+    select
+        q1_0.quiz_id,
+        q1_0.created_at,
+        q1_0.description,
+        q1_0.is_active,
+        q1_0.questions_json,
+        q1_0.target_class,
+        q1_0.title,
+        q1_0.updated_at 
+    from
+        quizzes q1_0 
+    where
+        q1_0.quiz_id=?
+2025-09-18T04:23:34.251+05:30 DEBUG 53949 --- [education] [nio-8080-exec-2] org.hibernate.SQL                        : 
+    select
+        u1_0.user_id,
+        u1_0.class_level,
+        u1_0.created_at,
+        u1_0.district,
+        u1_0.is_guest,
+        u1_0.name,
+        u1_0.password,
+        u1_0.phone,
+        u1_0.preferred_language,
+        u1_0.role,
+        u1_0.updated_at 
+    from
+        users u1_0 
+    where
+        u1_0.user_id=?
+2025-09-18T04:23:34.253+05:30 DEBUG 53949 --- [education] [nio-8080-exec-2] org.hibernate.SQL                        : 
+    /* insert for
+        com.education.education.entity.QuizAttempt */insert 
+    into
+        quiz_attempts (answers_json, quiz_id, recommended_streams, score, timestamp, user_id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+Quiz submission successful, result: com.education.education.dto.QuizResultDto@5ceacef2
+Calling Gemini AI service...
+Error getting college recommendations from Gemini: 429 Too Many Requests on POST request for "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent": "{<EOL>  "error": {<EOL>    "code": 429,<EOL>    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 50\nPlease retry in 24.246242802s.",<EOL>    "status": "RESOURCE_EXHAUSTED",<EOL>    "details": [<EOL>      {<EOL>        "@type": "type.googleapis.com/google.rpc.QuotaFailure",<EOL>        "violations": [<EOL>          {<EOL>            "quotaMetric": "generativelanguage.googleapis.com/generate_content_free_tier_requests",<EOL>            "quotaId": "GenerateRequestsPerDayPerProjectPerModel-FreeTier",<EOL>            "quotaDimensions": {<EOL>              "location": "global",<EOL>              "model": "gemini-1.5-flash"<EOL>            },<EOL>            "quotaValue": "50"<EOL>          }<EOL>        ]<EOL>      },<EOL>      {<EOL>        "@type": "type.googleapis.com/google.rpc.Help",<EOL>        "links": [<EOL>          {<EOL>            "description": "Learn more about Gemini API quotas",<EOL>            "url": "https://ai.google.dev/gemini-api/docs/rate-limits"<EOL>          }<EOL>        ]<EOL>      },<EOL>      {<EOL>        "@type": "type.googleapis.com/google.rpc.RetryInfo",<EOL>        "retryDelay": "24s"<EOL>      }<EOL>    ]<EOL>  }<EOL>}<EOL>"
+AI recommendations received
+2025-09-18T04:26:22.163+05:30 DEBUG 53949 --- [education] [nio-8080-exec-4] o.s.security.web.FilterChainProxy        : Securing GET /api/auth/test
+2025-09-18T04:26:22.163+05:30 DEBUG 53949 --- [education] [nio-8080-exec-4] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2025-09-18T04:26:22.163+05:30 DEBUG 53949 --- [education] [nio-8080-exec-4] o.s.security.web.FilterChainProxy        : Secured GET /api/auth/test
+2025-09-18T04:26:41.887+05:30 DEBUG 53949 --- [education] [nio-8080-exec-6] o.s.security.web.FilterChainProxy        : Securing POST /api/quiz/submit-with-ai
+2025-09-18T04:26:41.887+05:30 DEBUG 53949 --- [education] [nio-8080-exec-6] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2025-09-18T04:26:41.887+05:30 DEBUG 53949 --- [education] [nio-8080-exec-6] o.s.security.web.FilterChainProxy        : Secured POST /api/quiz/submit-with-ai
+Submitting quiz for userId: 12, quizId: 1
+2025-09-18T04:26:41.890+05:30 DEBUG 53949 --- [education] [nio-8080-exec-6] org.hibernate.SQL                        : 
+    select
+        q1_0.quiz_id,
+        q1_0.created_at,
+        q1_0.description,
+        q1_0.is_active,
+        q1_0.questions_json,
+        q1_0.target_class,
+        q1_0.title,
+        q1_0.updated_at 
+    from
+        quizzes q1_0 
+    where
+        q1_0.quiz_id=?
+2025-09-18T04:26:41.891+05:30 DEBUG 53949 --- [education] [nio-8080-exec-6] org.hibernate.SQL                        : 
+    select
+        u1_0.user_id,
+        u1_0.class_level,
+        u1_0.created_at,
+        u1_0.district,
+        u1_0.is_guest,
+        u1_0.name,
+        u1_0.password,
+        u1_0.phone,
+        u1_0.preferred_language,
+        u1_0.role,
+        u1_0.updated_at 
+    from
+        users u1_0 
+    where
+        u1_0.user_id=?
+2025-09-18T04:26:41.892+05:30 DEBUG 53949 --- [education] [nio-8080-exec-6] org.hibernate.SQL                        : 
+    /* insert for
+        com.education.education.entity.QuizAttempt */insert 
+    into
+        quiz_attempts (answers_json, quiz_id, recommended_streams, score, timestamp, user_id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+Quiz submission successful, result: com.education.education.dto.QuizResultDto@664e4783
+Calling Gemini AI service...
+AI recommendations received
