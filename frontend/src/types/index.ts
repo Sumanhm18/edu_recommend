@@ -2,7 +2,8 @@
 export interface User {
   id: number;
   name: string;
-  phone: string;
+  email: string;
+  phone?: string; // Optional for backward compatibility
   district: string;
   className: string;
   guest: boolean;
@@ -16,22 +17,39 @@ export interface AuthResponse {
     type: string;
     userId: number;
     name: string;
-    phone: string;
+    email: string;
+    phone?: string; // Optional for backward compatibility
     guest: boolean;
   };
 }
 
 export interface LoginRequest {
-  phone: string;
+  email: string;
   password: string;
 }
 
 export interface RegisterRequest {
   name: string;
-  phone: string;
+  email: string;
   password: string;
   district: string;
   className: string;
+  otp: string; // OTP is now required for registration
+}
+
+// OTP Types
+export interface OtpRequest {
+  email: string;
+}
+
+export interface OtpVerifyRequest {
+  email: string;
+  otp: string;
+}
+
+export interface OtpResponse {
+  success: boolean;
+  message: string;
 }
 
 // Quiz Types

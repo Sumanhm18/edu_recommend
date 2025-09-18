@@ -15,6 +15,16 @@ import {
 import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
+interface RegisterFormData {
+  name: string;
+  email: string;
+  district: string;
+  className: string;
+  password: string;
+  confirmPassword: string;
+  otp: string;
+}
+
 interface RegisterProps {
   onSwitchToLogin: () => void;
 }
@@ -28,17 +38,22 @@ const classOptions = [
 ];
 
 const Register: React.FC<RegisterProps> = ({ onSwitchToLogin }) => {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<RegisterFormData>({
     name: '',
-    phone: '',
-    password: '',
-    confirmPassword: '',
+    email: '',
     district: '',
     className: '',
+    password: '',
+    confirmPassword: '',
+    otp: ''
   });
+  const [loading, setLoading] = useState(false);
+  const [otpLoading, setOtpLoading] = useState(false);
   const [error, setError] = useState('');
-  const { register, loading } = useAuth();
+  const [success, setSuccess] = useState('');
+  const [step, setStep] = useState<'details' | 'otp'>('details');
   const navigate = useNavigate();
+  const { sendRegistrationOtp, register } = useAuth();
 
   const handleInputChange = (field: string, value: string) => {
     setFormData(prev => ({
@@ -47,37 +62,65 @@ const Register: React.FC<RegisterProps> = ({ onSwitchToLogin }) => {
     }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSendOtp = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
+    setSuccess('');
 
-    // Validation
-    if (!formData.name || !formData.phone || !formData.password || !formData.district || !formData.className) {
-      setError('Please fill in all fields');
+    // Validate required fields for step 1
+    if (!formData.name || !formData.email || !formData.password || !formData.district || !formData.className) {
+      setError('Please fill in all required fields');
       return;
     }
 
+    // Validate password confirmation
     if (formData.password !== formData.confirmPassword) {
       setError('Passwords do not match');
       return;
     }
 
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      setError('Please enter a valid email address');
+      return;
+    }
+
+    // Validate password length
     if (formData.password.length < 6) {
       setError('Password must be at least 6 characters long');
       return;
     }
 
-    if (formData.phone.length < 10) {
-      setError('Please enter a valid phone number');
+    setOtpLoading(true);
+    const result = await sendRegistrationOtp(formData.email);
+    setOtpLoading(false);
+
+    if (result.success) {
+      setSuccess('OTP sent successfully! Please check your email.');
+      setStep('otp');
+    } else {
+      setError(result.message || 'Failed to send OTP. Please try again.');
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError('');
+    setSuccess('');
+
+    if (!formData.otp) {
+      setError('Please enter the OTP');
       return;
     }
 
     const result = await register(
       formData.name,
-      formData.phone,
+      formData.email,
       formData.password,
       formData.district,
-      formData.className
+      formData.className,
+      formData.otp
     );
 
     if (result.success) {
@@ -87,7 +130,12 @@ const Register: React.FC<RegisterProps> = ({ onSwitchToLogin }) => {
     }
   };
 
-  return (
+  const handleBackToDetails = () => {
+    setStep('details');
+    setFormData((prev: RegisterFormData) => ({ ...prev, otp: '' }));
+    setError('');
+    setSuccess('');
+  };  return (
     <Container maxWidth="sm">
       <Box
         display="flex"
@@ -100,10 +148,13 @@ const Register: React.FC<RegisterProps> = ({ onSwitchToLogin }) => {
         <Card sx={{ width: '100%', maxWidth: 400 }}>
           <CardContent sx={{ p: 4 }}>
             <Typography variant="h4" component="h1" gutterBottom align="center">
-              Register
+              {step === 'details' ? 'Register' : 'Verify Email'}
             </Typography>
             <Typography variant="body2" color="text.secondary" align="center" sx={{ mb: 3 }}>
-              Create your account to get started
+              {step === 'details' 
+                ? 'Create your account to get started' 
+                : `Enter the OTP sent to ${formData.email}`
+              }
             </Typography>
 
             {error && (
@@ -112,84 +163,124 @@ const Register: React.FC<RegisterProps> = ({ onSwitchToLogin }) => {
               </Alert>
             )}
 
-            <form onSubmit={handleSubmit}>
-              <TextField
-                fullWidth
-                label="Full Name"
-                value={formData.name}
-                onChange={(e) => handleInputChange('name', e.target.value)}
-                margin="normal"
-                required
-                autoComplete="name"
-                placeholder="Enter your full name"
-              />
-              <TextField
-                fullWidth
-                label="Phone Number"
-                value={formData.phone}
-                onChange={(e) => handleInputChange('phone', e.target.value)}
-                margin="normal"
-                required
-                autoComplete="tel"
-                placeholder="Enter your phone number"
-              />
-              <TextField
-                fullWidth
-                label="District"
-                value={formData.district}
-                onChange={(e) => handleInputChange('district', e.target.value)}
-                margin="normal"
-                required
-                placeholder="Enter your district"
-              />
-              <TextField
-                fullWidth
-                select
-                label="Class"
-                value={formData.className}
-                onChange={(e) => handleInputChange('className', e.target.value)}
-                margin="normal"
-                required
-              >
-                {classOptions.map((option) => (
-                  <MenuItem key={option} value={option}>
-                    {option}
-                  </MenuItem>
-                ))}
-              </TextField>
-              <TextField
-                fullWidth
-                label="Password"
-                type="password"
-                value={formData.password}
-                onChange={(e) => handleInputChange('password', e.target.value)}
-                margin="normal"
-                required
-                autoComplete="new-password"
-                placeholder="Enter your password"
-              />
-              <TextField
-                fullWidth
-                label="Confirm Password"
-                type="password"
-                value={formData.confirmPassword}
-                onChange={(e) => handleInputChange('confirmPassword', e.target.value)}
-                margin="normal"
-                required
-                autoComplete="new-password"
-                placeholder="Confirm your password"
-              />
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                size="large"
-                disabled={loading}
-                sx={{ mt: 3, mb: 2 }}
-              >
-                {loading ? <CircularProgress size={24} /> : 'Register'}
-              </Button>
-            </form>
+            {success && (
+              <Alert severity="success" sx={{ mb: 2 }}>
+                {success}
+              </Alert>
+            )}
+
+            {step === 'details' ? (
+              <form onSubmit={handleSendOtp}>
+                <TextField
+                  fullWidth
+                  label="Full Name"
+                  value={formData.name}
+                  onChange={(e) => handleInputChange('name', e.target.value)}
+                  margin="normal"
+                  required
+                  autoComplete="name"
+                  placeholder="Enter your full name"
+                />
+                <TextField
+                  fullWidth
+                  label="Email"
+                  value={formData.email}
+                  onChange={(e) => handleInputChange('email', e.target.value)}
+                  margin="normal"
+                  required
+                  autoComplete="email"
+                  placeholder="Enter your email address"
+                />
+                <TextField
+                  fullWidth
+                  label="District"
+                  value={formData.district}
+                  onChange={(e) => handleInputChange('district', e.target.value)}
+                  margin="normal"
+                  required
+                  placeholder="Enter your district"
+                />
+                <TextField
+                  fullWidth
+                  select
+                  label="Class"
+                  value={formData.className}
+                  onChange={(e) => handleInputChange('className', e.target.value)}
+                  margin="normal"
+                  required
+                >
+                  {classOptions.map((option) => (
+                    <MenuItem key={option} value={option}>
+                      {option}
+                    </MenuItem>
+                  ))}
+                </TextField>
+                <TextField
+                  fullWidth
+                  label="Password"
+                  type="password"
+                  value={formData.password}
+                  onChange={(e) => handleInputChange('password', e.target.value)}
+                  margin="normal"
+                  required
+                  autoComplete="new-password"
+                  placeholder="Enter your password"
+                />
+                <TextField
+                  fullWidth
+                  label="Confirm Password"
+                  type="password"
+                  value={formData.confirmPassword}
+                  onChange={(e) => handleInputChange('confirmPassword', e.target.value)}
+                  margin="normal"
+                  required
+                  autoComplete="new-password"
+                  placeholder="Confirm your password"
+                />
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  size="large"
+                  disabled={otpLoading}
+                  sx={{ mt: 3, mb: 2 }}
+                >
+                  {otpLoading ? <CircularProgress size={24} /> : 'Send OTP'}
+                </Button>
+              </form>
+            ) : (
+              <form onSubmit={handleSubmit}>
+                <TextField
+                  fullWidth
+                  label="Enter OTP"
+                  value={formData.otp}
+                  onChange={(e) => handleInputChange('otp', e.target.value)}
+                  margin="normal"
+                  required
+                  placeholder="Enter the 6-digit OTP"
+                  inputProps={{ maxLength: 6 }}
+                />
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  size="large"
+                  disabled={loading}
+                  sx={{ mt: 3, mb: 2 }}
+                >
+                  {loading ? <CircularProgress size={24} /> : 'Complete Registration'}
+                </Button>
+                <Button
+                  fullWidth
+                  variant="outlined"
+                  size="large"
+                  onClick={handleBackToDetails}
+                  sx={{ mb: 2 }}
+                >
+                  Back to Details
+                </Button>
+              </form>
+            )}
 
             <Box textAlign="center">
               <Typography variant="body2">

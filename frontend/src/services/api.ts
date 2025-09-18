@@ -3,6 +3,9 @@ import {
   AuthResponse, 
   LoginRequest, 
   RegisterRequest, 
+  OtpRequest,
+  OtpVerifyRequest,
+  OtpResponse,
   Quiz, 
   QuizSubmission, 
   QuizSubmissionResponse 
@@ -36,7 +39,7 @@ export const authService = {
       localStorage.setItem('user', JSON.stringify({
         id: response.data.data.userId,
         name: response.data.data.name,
-        phone: response.data.data.phone,
+        email: response.data.data.email,
         guest: response.data.data.guest,
       }));
     }
@@ -50,7 +53,31 @@ export const authService = {
       localStorage.setItem('user', JSON.stringify({
         id: response.data.data.userId,
         name: response.data.data.name,
-        phone: response.data.data.phone,
+        email: response.data.data.email,
+        guest: response.data.data.guest,
+      }));
+    }
+    return response.data;
+  },
+
+  sendRegistrationOtp: async (otpRequest: OtpRequest): Promise<OtpResponse> => {
+    const response: AxiosResponse<OtpResponse> = await api.post('/auth/send-registration-otp', otpRequest);
+    return response.data;
+  },
+
+  sendOtp: async (otpRequest: OtpRequest): Promise<OtpResponse> => {
+    const response: AxiosResponse<OtpResponse> = await api.post('/auth/send-otp', otpRequest);
+    return response.data;
+  },
+
+  verifyOtp: async (verifyRequest: OtpVerifyRequest): Promise<AuthResponse> => {
+    const response: AxiosResponse<AuthResponse> = await api.post('/auth/verify-otp', verifyRequest);
+    if (response.data.success && response.data.data?.token) {
+      localStorage.setItem('authToken', response.data.data.token);
+      localStorage.setItem('user', JSON.stringify({
+        id: response.data.data.userId,
+        name: response.data.data.name,
+        email: response.data.data.email,
         guest: response.data.data.guest,
       }));
     }

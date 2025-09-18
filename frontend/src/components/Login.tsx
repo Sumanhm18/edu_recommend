@@ -19,7 +19,7 @@ interface LoginProps {
 }
 
 const Login: React.FC<LoginProps> = ({ onSwitchToRegister }) => {
-  const [phone, setPhone] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const { login, loading } = useAuth();
@@ -29,12 +29,12 @@ const Login: React.FC<LoginProps> = ({ onSwitchToRegister }) => {
     e.preventDefault();
     setError('');
 
-    if (!phone || !password) {
+    if (!email || !password) {
       setError('Please fill in all fields');
       return;
     }
 
-    const success = await login(phone, password);
+    const success = await login(email, password);
     if (success) {
       navigate('/dashboard');
     } else {
@@ -69,13 +69,14 @@ const Login: React.FC<LoginProps> = ({ onSwitchToRegister }) => {
             <form onSubmit={handleSubmit}>
               <TextField
                 fullWidth
-                label="Phone Number"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
+                label="Email Address"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 margin="normal"
                 required
-                autoComplete="tel"
-                placeholder="Enter your phone number"
+                autoComplete="email"
+                placeholder="Enter your email address"
               />
               <TextField
                 fullWidth

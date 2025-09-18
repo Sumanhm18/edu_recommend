@@ -9,8 +9,9 @@ interface AuthState {
 }
 
 interface AuthContextType extends AuthState {
-  login: (phone: string, password: string) => Promise<boolean>;
-  register: (name: string, phone: string, password: string, district: string, className: string) => Promise<{ success: boolean; message?: string }>;
+  login: (email: string, password: string) => Promise<boolean>;
+  register: (name: string, email: string, password: string, district: string, className: string, otp: string) => Promise<{ success: boolean; message?: string }>;
+  sendRegistrationOtp: (email: string) => Promise<{ success: boolean; message?: string }>;
   logout: () => void;
 }
 
@@ -84,16 +85,16 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     });
   }, []);
 
-  const login = async (phone: string, password: string): Promise<boolean> => {
+  const login = async (email: string, password: string): Promise<boolean> => {
     try {
       dispatch({ type: 'SET_LOADING', payload: true });
-      const response = await authService.login({ phone, password });
+      const response = await authService.login({ email, password });
       
       if (response.success && response.data) {
         const user: User = {
           id: response.data.userId,
           name: response.data.name,
-          phone: response.data.phone,
+          email: response.data.email,
           district: '', // Will be updated with user details later
           className: '',
           guest: response.data.guest,
@@ -113,26 +114,28 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const register = async (
     name: string, 
-    phone: string, 
+    email: string, 
     password: string, 
     district: string, 
-    className: string
+    className: string,
+    otp: string
   ): Promise<{ success: boolean; message?: string }> => {
     try {
       dispatch({ type: 'SET_LOADING', payload: true });
       const response = await authService.register({ 
         name, 
-        phone, 
+        email, 
         password, 
         district, 
-        className 
+        className,
+        otp
       });
       
       if (response.success && response.data) {
         const user: User = {
           id: response.data.userId,
           name: response.data.name,
-          phone: response.data.phone,
+          email: response.data.email,
           district,
           className,
           guest: response.data.guest,
@@ -151,6 +154,20 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
   };
 
+  const sendRegistrationOtp = async (email: string): Promise<{ success: boolean; message?: string }> => {
+    try {
+      const response = await authService.sendRegistrationOtp({ email });
+      return { 
+        success: response.success, 
+        message: response.message 
+      };
+    } catch (error: any) {
+      console.error('Send registration OTP error:', error);
+      const errorMessage = error.response?.data?.message || 'Failed to send OTP. Please try again.';
+      return { success: false, message: errorMessage };
+    }
+  };
+
   const logout = () => {
     authService.logout();
     dispatch({ type: 'LOGOUT' });
@@ -160,6 +177,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     ...state,
     login,
     register,
+    sendRegistrationOtp,
     logout,
   };
 
