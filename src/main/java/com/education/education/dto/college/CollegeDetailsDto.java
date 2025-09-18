@@ -20,65 +20,161 @@ public class CollegeDetailsDto {
     private String feesRange;
     private Double placementRate;
     private String contactInfo;
-    
+
     // Constructors
-    public CollegeDetailsDto() {}
-    
+    public CollegeDetailsDto() {
+    }
+
     // Getters and Setters
-    public Long getCollegeId() { return collegeId; }
-    public void setCollegeId(Long collegeId) { this.collegeId = collegeId; }
-    
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
-    
-    public String getDistrict() { return district; }
-    public void setDistrict(String district) { this.district = district; }
-    
-    public String getState() { return state; }
-    public void setState(String state) { this.state = state; }
-    
-    public String getPincode() { return pincode; }
-    public void setPincode(String pincode) { this.pincode = pincode; }
-    
-    public String getAddress() { return address; }
-    public void setAddress(String address) { this.address = address; }
-    
-    public String getCollegeType() { return collegeType; }
-    public void setCollegeType(String collegeType) { this.collegeType = collegeType; }
-    
-    public String getCollegeTier() { return collegeTier; }
-    public void setCollegeTier(String collegeTier) { this.collegeTier = collegeTier; }
-    
-    public String getStreamsOffered() { return streamsOffered; }
-    public void setStreamsOffered(String streamsOffered) { this.streamsOffered = streamsOffered; }
-    
-    public String getCoursesOffered() { return coursesOffered; }
-    public void setCoursesOffered(String coursesOffered) { this.coursesOffered = coursesOffered; }
-    
-    public String getFacilities() { return facilities; }
-    public void setFacilities(String facilities) { this.facilities = facilities; }
-    
-    public Integer getEstablishmentYear() { return establishmentYear; }
-    public void setEstablishmentYear(Integer establishmentYear) { this.establishmentYear = establishmentYear; }
-    
-    public String getAffiliation() { return affiliation; }
-    public void setAffiliation(String affiliation) { this.affiliation = affiliation; }
-    
-    public String getWebsite() { return website; }
-    public void setWebsite(String website) { this.website = website; }
-    
-    public String getPhone() { return phone; }
-    public void setPhone(String phone) { this.phone = phone; }
-    
-    public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
-    
-    public String getFeesRange() { return feesRange; }
-    public void setFeesRange(String feesRange) { this.feesRange = feesRange; }
-    
-    public Double getPlacementRate() { return placementRate; }
-    public void setPlacementRate(Double placementRate) { this.placementRate = placementRate; }
-    
-    public String getContactInfo() { return contactInfo; }
-    public void setContactInfo(String contactInfo) { this.contactInfo = contactInfo; }
+    public Long getCollegeId() {
+        return collegeId;
+    }
+
+    public void setCollegeId(Long collegeId) {
+        this.collegeId = collegeId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(String district) {
+        this.district = district;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public String getPincode() {
+        return pincode;
+    }
+
+    public void setPincode(String pincode) {
+        this.pincode = pincode;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getCollegeType() {
+        return collegeType;
+    }
+
+    public void setCollegeType(String collegeType) {
+        this.collegeType = collegeType;
+    }
+
+    public String getCollegeTier() {
+        return collegeTier;
+    }
+
+    public void setCollegeTier(String collegeTier) {
+        this.collegeTier = collegeTier;
+    }
+
+    public String getStreamsOffered() {
+        return streamsOffered;
+    }
+
+    public void setStreamsOffered(String streamsOffered) {
+        this.streamsOffered = streamsOffered;
+    }
+
+    public String getCoursesOffered() {
+        return coursesOffered;
+    }
+
+    public void setCoursesOffered(String coursesOffered) {
+        this.coursesOffered = coursesOffered;
+    }
+
+    public String getFacilities() {
+        return facilities;
+    }
+
+    public void setFacilities(String facilities) {
+        this.facilities = facilities;
+    }
+
+    public Integer getEstablishmentYear() {
+        return establishmentYear;
+    }
+
+    public void setEstablishmentYear(Integer establishmentYear) {
+        this.establishmentYear = establishmentYear;
+    }
+
+    public String getAffiliation() {
+        return affiliation;
+    }
+
+    public void setAffiliation(String affiliation) {
+        this.affiliation = affiliation;
+    }
+
+    public String getWebsite() {
+        return website;
+    }
+
+    public void setWebsite(String website) {
+        this.website = website;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getFeesRange() {
+        return feesRange;
+    }
+
+    public void setFeesRange(String feesRange) {
+        this.feesRange = feesRange;
+    }
+
+    public Double getPlacementRate() {
+        return placementRate;
+    }
+
+    public void setPlacementRate(Double placementRate) {
+        this.placementRate = placementRate;
+    }
+
+    public String getContactInfo() {
+        return contactInfo;
+    }
+
+    public void setContactInfo(String contactInfo) {
+        this.contactInfo = contactInfo;
+    }
 }

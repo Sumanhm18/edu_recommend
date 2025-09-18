@@ -1,9 +1,11 @@
 # 🧪 Education MVP - Comprehensive API Testing Guide
 
 ## 📋 Overview
+
 This document provides a complete testing guide for all implemented APIs in the Education MVP system. All endpoints have been tested and are working perfectly.
 
 ## 🔧 Setup
+
 - **Base URL**: `http://localhost:8080`
 - **Database**: PostgreSQL (auto-configured)
 - **Authentication**: JWT-based with guest support
@@ -15,15 +17,20 @@ This document provides a complete testing guide for all implemented APIs in the 
 ### 1. 🔐 Authentication APIs
 
 #### ✅ 1.1 Health Check
+
 ```bash
 GET /api/auth/test
 ```
+
 **Test Command:**
+
 ```bash
 curl -X GET "http://localhost:8080/api/auth/test" \
   -H "Content-Type: application/json"
 ```
+
 **Expected Response:**
+
 ```json
 {
   "success": true,
@@ -33,15 +40,20 @@ curl -X GET "http://localhost:8080/api/auth/test" \
 ```
 
 #### ✅ 1.2 Guest Login
+
 ```bash
 POST /api/auth/guest-login
 ```
+
 **Test Command:**
+
 ```bash
 curl -X POST "http://localhost:8080/api/auth/guest-login" \
   -H "Content-Type: application/json"
 ```
+
 **Expected Response:**
+
 ```json
 {
   "message": "Guest login successful",
@@ -58,16 +70,21 @@ curl -X POST "http://localhost:8080/api/auth/guest-login" \
 ```
 
 #### ✅ 1.3 Send OTP
+
 ```bash
 POST /api/auth/send-otp
 ```
+
 **Test Command:**
+
 ```bash
 curl -X POST "http://localhost:8080/api/auth/send-otp" \
   -H "Content-Type: application/json" \
   -d '{"phoneNumber": "9876543210"}'
 ```
+
 **Expected Response:**
+
 ```json
 {
   "success": true,
@@ -76,16 +93,21 @@ curl -X POST "http://localhost:8080/api/auth/send-otp" \
 ```
 
 #### ✅ 1.4 Verify OTP
+
 ```bash
 POST /api/auth/verify-otp
 ```
+
 **Test Command:**
+
 ```bash
 curl -X POST "http://localhost:8080/api/auth/verify-otp" \
   -H "Content-Type: application/json" \
   -d '{"phoneNumber": "9876543210", "otp": "123456"}'
 ```
+
 **Expected Response:**
+
 ```json
 {
   "success": true,
@@ -105,10 +127,13 @@ curl -X POST "http://localhost:8080/api/auth/verify-otp" \
 ### 2. 👤 Profile Management APIs
 
 #### ✅ 2.1 Create Profile
+
 ```bash
 POST /api/user/profile
 ```
+
 **Test Command:**
+
 ```bash
 curl -X POST "http://localhost:8080/api/user/profile" \
   -H "Content-Type: application/json" \
@@ -125,20 +150,26 @@ curl -X POST "http://localhost:8080/api/user/profile" \
 ```
 
 #### ✅ 2.2 Get Profile
+
 ```bash
 GET /api/user/profile
 ```
+
 **Test Command:**
+
 ```bash
 curl -X GET "http://localhost:8080/api/user/profile" \
   -H "Authorization: Bearer YOUR_TOKEN"
 ```
 
 #### ✅ 2.3 Update Profile
+
 ```bash
 PUT /api/user/profile
 ```
+
 **Test Command:**
+
 ```bash
 curl -X PUT "http://localhost:8080/api/user/profile" \
   -H "Content-Type: application/json" \
@@ -155,15 +186,20 @@ curl -X PUT "http://localhost:8080/api/user/profile" \
 ### 3. 📝 Quiz Engine APIs (CORE SIH FEATURE)
 
 #### ✅ 3.1 Get Quiz Categories (Public)
+
 ```bash
 GET /api/quiz/categories
 ```
+
 **Test Command:**
+
 ```bash
 curl -X GET "http://localhost:8080/api/quiz/categories" \
   -H "Content-Type: application/json"
 ```
+
 **Expected Response:**
+
 ```json
 {
   "message": "Quiz categories and information retrieved successfully",
@@ -190,16 +226,21 @@ curl -X GET "http://localhost:8080/api/quiz/categories" \
 ```
 
 #### ✅ 3.2 Get Available Quizzes
+
 ```bash
 GET /api/quiz/available
 ```
+
 **Test Command:**
+
 ```bash
 curl -X GET "http://localhost:8080/api/quiz/available" \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer GUEST_TOKEN"
 ```
+
 **Expected Response:**
+
 ```json
 {
   "message": "Available quizzes retrieved successfully",
@@ -224,15 +265,20 @@ curl -X GET "http://localhost:8080/api/quiz/available" \
 ```
 
 #### ✅ 3.3 Get Quiz by ID
+
 ```bash
 GET /api/quiz/{quizId}
 ```
+
 **Test Command:**
+
 ```bash
 curl -X GET "http://localhost:8080/api/quiz/1" \
   -H "Authorization: Bearer GUEST_TOKEN"
 ```
+
 **Expected Response:**
+
 ```json
 {
   "message": "Quiz retrieved successfully",
@@ -246,10 +292,13 @@ curl -X GET "http://localhost:8080/api/quiz/1" \
 ```
 
 #### ✅ 3.4 Submit Quiz (CORE FEATURE)
+
 ```bash
 POST /api/quiz/submit
 ```
+
 **Test Command 1 - General Aptitude (Perfect Score):**
+
 ```bash
 curl -X POST "http://localhost:8080/api/quiz/submit" \
   -H "Content-Type: application/json" \
@@ -272,7 +321,9 @@ curl -X POST "http://localhost:8080/api/quiz/submit" \
     ]
   }'
 ```
+
 **Expected Response:**
+
 ```json
 {
   "message": "Quiz submitted successfully. Stream recommendations generated!",
@@ -291,7 +342,10 @@ curl -X POST "http://localhost:8080/api/quiz/submit" \
       "dominantAptitude": "Analytical"
     },
     "recommendedStreams": ["Science (100% match)", "Commerce (100% match)"],
-    "recommendedColleges": ["Government First Grade College, Unknown", "Government Diploma Institute, Unknown"],
+    "recommendedColleges": [
+      "Government First Grade College, Unknown",
+      "Government Diploma Institute, Unknown"
+    ],
     "collegeTier": "Premier",
     "performanceLevel": "Excellent"
   },
@@ -300,6 +354,7 @@ curl -X POST "http://localhost:8080/api/quiz/submit" \
 ```
 
 **Test Command 2 - Career Interest (Arts Stream):**
+
 ```bash
 curl -X POST "http://localhost:8080/api/quiz/submit" \
   -H "Content-Type: application/json" \
@@ -318,7 +373,9 @@ curl -X POST "http://localhost:8080/api/quiz/submit" \
     ]
   }'
 ```
+
 **Expected Response:**
+
 ```json
 {
   "message": "Quiz submitted successfully. Stream recommendations generated!",
@@ -344,30 +401,39 @@ curl -X POST "http://localhost:8080/api/quiz/submit" \
 ```
 
 #### ✅ 3.5 Get Quiz History (Authenticated Users Only)
+
 ```bash
 GET /api/quiz/history
 ```
+
 **Test Command:**
+
 ```bash
 curl -X GET "http://localhost:8080/api/quiz/history" \
   -H "Authorization: Bearer AUTHENTICATED_USER_TOKEN"
 ```
 
 #### ✅ 3.6 Get Stream Recommendations (Authenticated Users Only)
+
 ```bash
 GET /api/quiz/recommendations
 ```
+
 **Test Command:**
+
 ```bash
 curl -X GET "http://localhost:8080/api/quiz/recommendations" \
   -H "Authorization: Bearer AUTHENTICATED_USER_TOKEN"
 ```
 
 #### ✅ 3.7 Get Quiz Statistics (Authenticated Users Only)
+
 ```bash
 GET /api/quiz/stats
 ```
+
 **Test Command:**
+
 ```bash
 curl -X GET "http://localhost:8080/api/quiz/stats" \
   -H "Authorization: Bearer AUTHENTICATED_USER_TOKEN"
@@ -379,22 +445,26 @@ curl -X GET "http://localhost:8080/api/quiz/stats" \
 
 ### ✅ Core Requirements Met:
 
-1. **Aptitude Assessment**: ✅ 
+1. **Aptitude Assessment**: ✅
+
    - Mathematical, Verbal, Analytical, Technical evaluations
    - Weighted scoring algorithms
    - Real-time results
 
 2. **Stream Recommendations**: ✅
+
    - Science (40% Math + 40% Technical + 20% Analytical)
    - Commerce (30% Math + 40% Analytical + 30% Verbal)
    - Arts (60% Verbal + 40% Analytical)
 
 3. **Government College Awareness**: ✅
+
    - College recommendations based on performance
    - Tier-based suggestions (Premier/Foundation)
    - Location-aware recommendations
 
 4. **Accessibility**: ✅
+
    - Guest mode for immediate access
    - No registration required for basic features
    - Mobile-friendly APIs
@@ -409,17 +479,20 @@ curl -X GET "http://localhost:8080/api/quiz/stats" \
 ## 📊 Test Results Summary
 
 ### Authentication System:
+
 - ✅ Guest login: Working
-- ✅ OTP sending: Working  
+- ✅ OTP sending: Working
 - ✅ OTP verification: Working
 - ✅ JWT token generation: Working
 
 ### Profile Management:
+
 - ✅ Create profile: Working
 - ✅ Update profile: Working
 - ✅ Retrieve profile: Working
 
 ### Quiz Engine (Core SIH Feature):
+
 - ✅ Public quiz categories: Working
 - ✅ Available quizzes: Working (2 sample quizzes)
 - ✅ Quiz details: Working
@@ -429,6 +502,7 @@ curl -X GET "http://localhost:8080/api/quiz/stats" \
 - ✅ Guest support: Working
 
 ### Database:
+
 - ✅ PostgreSQL integration: Working
 - ✅ Sample data initialization: Working
 - ✅ JPA relationships: Working
@@ -448,13 +522,15 @@ curl -X GET "http://localhost:8080/api/quiz/stats" \
 ## 🚀 Ready for Next Phase
 
 The following major components are implemented and tested:
+
 - ✅ Authentication & Security
-- ✅ User Profile Management  
+- ✅ User Profile Management
 - ✅ Complete Quiz Engine with Stream Recommendations
 - ✅ Database Schema & Relationships
 - ✅ Guest User Support
 
 **Next Implementation Priority:**
+
 1. College Directory APIs
 2. Course-Career Mapping
 3. Notification System

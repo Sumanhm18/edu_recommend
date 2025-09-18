@@ -13,10 +13,10 @@ import java.util.Optional;
 @Service
 @Transactional
 public class ProfileService {
-    
+
     @Autowired
     private UserRepository userRepository;
-    
+
     /**
      * Get user profile by user ID
      */
@@ -25,11 +25,11 @@ public class ProfileService {
         if (userOptional.isEmpty()) {
             throw new RuntimeException("User not found with ID: " + userId);
         }
-        
+
         User user = userOptional.get();
         return convertToProfileResponseDto(user);
     }
-    
+
     /**
      * Get user profile by phone number
      */
@@ -38,11 +38,11 @@ public class ProfileService {
         if (userOptional.isEmpty()) {
             throw new RuntimeException("User not found with phone: " + phone);
         }
-        
+
         User user = userOptional.get();
         return convertToProfileResponseDto(user);
     }
-    
+
     /**
      * Create or update user profile
      */
@@ -51,21 +51,21 @@ public class ProfileService {
         if (userOptional.isEmpty()) {
             throw new RuntimeException("User not found with ID: " + userId);
         }
-        
+
         User user = userOptional.get();
-        
+
         // Update profile fields
         user.setName(profileRequest.getName());
         user.setClassLevel(profileRequest.getClassLevel());
         user.setDistrict(profileRequest.getDistrict());
         user.setPreferredLanguage(profileRequest.getPreferredLanguage());
-        
+
         // Save updated user
         User savedUser = userRepository.save(user);
-        
+
         return convertToProfileResponseDto(savedUser);
     }
-    
+
     /**
      * Update specific profile fields
      */
@@ -74,9 +74,9 @@ public class ProfileService {
         if (userOptional.isEmpty()) {
             throw new RuntimeException("User not found with ID: " + userId);
         }
-        
+
         User user = userOptional.get();
-        
+
         // Update only non-null fields
         if (profileRequest.getName() != null && !profileRequest.getName().trim().isEmpty()) {
             user.setName(profileRequest.getName());
@@ -90,13 +90,13 @@ public class ProfileService {
         if (profileRequest.getPreferredLanguage() != null && !profileRequest.getPreferredLanguage().trim().isEmpty()) {
             user.setPreferredLanguage(profileRequest.getPreferredLanguage());
         }
-        
+
         // Save updated user
         User savedUser = userRepository.save(user);
-        
+
         return convertToProfileResponseDto(savedUser);
     }
-    
+
     /**
      * Check if user profile is complete
      */
@@ -105,14 +105,14 @@ public class ProfileService {
         if (userOptional.isEmpty()) {
             return false;
         }
-        
+
         User user = userOptional.get();
         return user.getName() != null && !user.getName().trim().isEmpty() &&
-               user.getClassLevel() != null && !user.getClassLevel().trim().isEmpty() &&
-               user.getDistrict() != null && !user.getDistrict().trim().isEmpty() &&
-               user.getPreferredLanguage() != null && !user.getPreferredLanguage().trim().isEmpty();
+                user.getClassLevel() != null && !user.getClassLevel().trim().isEmpty() &&
+                user.getDistrict() != null && !user.getDistrict().trim().isEmpty() &&
+                user.getPreferredLanguage() != null && !user.getPreferredLanguage().trim().isEmpty();
     }
-    
+
     /**
      * Delete user profile (soft delete by marking as inactive)
      */
@@ -121,26 +121,25 @@ public class ProfileService {
         if (userOptional.isEmpty()) {
             throw new RuntimeException("User not found with ID: " + userId);
         }
-        
+
         // For now, we'll actually delete. In production, you might want soft delete
         userRepository.deleteById(userId);
     }
-    
+
     /**
      * Convert User entity to ProfileResponseDto
      */
     private ProfileResponseDto convertToProfileResponseDto(User user) {
         return new ProfileResponseDto(
-            user.getUserId(),
-            user.getName(),
-            user.getPhone(),
-            user.getClassLevel(),
-            user.getDistrict(),
-            user.getPreferredLanguage(),
-            user.getIsGuest(),
-            user.getRole().toString(),
-            user.getCreatedAt(),
-            user.getUpdatedAt()
-        );
+                user.getUserId(),
+                user.getName(),
+                user.getPhone(),
+                user.getClassLevel(),
+                user.getDistrict(),
+                user.getPreferredLanguage(),
+                user.getIsGuest(),
+                user.getRole().toString(),
+                user.getCreatedAt(),
+                user.getUpdatedAt());
     }
 }

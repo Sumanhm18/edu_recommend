@@ -10,16 +10,17 @@ import java.util.Optional;
 
 @Service
 public class UserService {
-    
+
     @Autowired
     private UserRepository userRepository;
-    
+
     @Autowired
     private PasswordEncoder passwordEncoder;
-    
-    public User createOrGetUser(String phone, String name, String classLevel, String district, String language, String password) {
+
+    public User createOrGetUser(String phone, String name, String classLevel, String district, String language,
+            String password) {
         Optional<User> existingUser = userRepository.findByPhone(phone);
-        
+
         if (existingUser.isPresent()) {
             User user = existingUser.get();
             // Update user details if provided
@@ -54,24 +55,24 @@ public class UserService {
             return userRepository.save(newUser);
         }
     }
-    
+
     // Keep the old method for backward compatibility
     public User createOrGetUser(String phone, String name, String classLevel, String district, String language) {
         return createOrGetUser(phone, name, classLevel, district, language, null);
     }
-    
+
     public User findByPhone(String phone) {
         return userRepository.findByPhone(phone).orElse(null);
     }
-    
+
     public User findById(Long userId) {
         return userRepository.findById(userId).orElse(null);
     }
-    
+
     public boolean existsByPhone(String phone) {
         return userRepository.existsByPhone(phone);
     }
-    
+
     public boolean verifyPassword(User user, String rawPassword) {
         if (user.getPassword() == null || rawPassword == null) {
             return false;

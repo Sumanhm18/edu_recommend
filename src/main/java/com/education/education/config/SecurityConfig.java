@@ -21,48 +21,49 @@ import java.util.Arrays;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-    
+
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtRequestFilter jwtRequestFilter;
-    
-    public SecurityConfig(JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint, 
-                         JwtRequestFilter jwtRequestFilter) {
+
+    public SecurityConfig(JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint,
+            JwtRequestFilter jwtRequestFilter) {
         this.jwtAuthenticationEntryPoint = jwtAuthenticationEntryPoint;
         this.jwtRequestFilter = jwtRequestFilter;
     }
-    
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-    
+
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
     }
-    
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.cors(cors -> cors.configurationSource(corsConfigurationSource()))
-            .csrf(csrf -> csrf.disable())
-            .authorizeHttpRequests(authz -> authz
-                    .requestMatchers("/api/auth/**").permitAll()
-                    .requestMatchers("/api/public/**").permitAll()
-                    .requestMatchers("/api/guest/**").permitAll()
-                    .requestMatchers("/api/quiz/**").permitAll() // Allow access to all quiz endpoints
-                    .requestMatchers("/api/admin/**").hasAnyRole("ADMIN", "SUPER_ADMIN")
-                    .requestMatchers("/api/super-admin/**").hasRole("SUPER_ADMIN")
-                    .anyRequest().permitAll() // Temporarily allow all for testing
-            )
-            .exceptionHandling(ex -> ex.authenticationEntryPoint(jwtAuthenticationEntryPoint))
-            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-        
+                .csrf(csrf -> csrf.disable())
+                .authorizeHttpRequests(authz -> authz
+                        .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers("/api/public/**").permitAll()
+                        .requestMatchers("/api/guest/**").permitAll()
+                        .requestMatchers("/api/quiz/**").permitAll() // Allow access to all quiz endpoints
+                        .requestMatchers("/api/admin/**").hasAnyRole("ADMIN", "SUPER_ADMIN")
+                        .requestMatchers("/api/super-admin/**").hasRole("SUPER_ADMIN")
+                        .anyRequest().permitAll() // Temporarily allow all for testing
+                )
+                .exceptionHandling(ex -> ex.authenticationEntryPoint(jwtAuthenticationEntryPoint))
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+
         // Comment out the JWT filter temporarily for testing
-        // http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
-        
+        // http.addFilterBefore(jwtRequestFilter,
+        // UsernamePasswordAuthenticationFilter.class);
+
         return http.build();
     }
-    
+
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
@@ -70,7 +71,7 @@ public class SecurityConfig {
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
         configuration.setAllowCredentials(true);
-        
+
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;

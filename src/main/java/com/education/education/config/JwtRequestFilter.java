@@ -17,20 +17,20 @@ import java.util.List;
 
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
-    
+
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
-    
+
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, 
-                                  FilterChain chain) throws ServletException, IOException {
-        
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
+            FilterChain chain) throws ServletException, IOException {
+
         final String requestTokenHeader = request.getHeader("Authorization");
-        
+
         String username = null;
         String jwtToken = null;
         boolean isGuest = false;
-        
+
         if (requestTokenHeader != null && requestTokenHeader.startsWith("Bearer ")) {
             jwtToken = requestTokenHeader.substring(7);
             try {
@@ -40,15 +40,16 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                 logger.error("Unable to get JWT Token or token is expired");
             }
         }
-        
+
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            
+
             boolean isValidToken = false;
-            
+
             if (isGuest) {
                 isValidToken = jwtTokenUtil.validateTokenForGuest(jwtToken, username);
             } else {
-                // For now, we'll create a simple validation since we don't have UserDetailsService
+                // For now, we'll create a simple validation since we don't have
+                // UserDetailsService
                 // In production, you should implement proper UserDetailsService
                 try {
                     if (!jwtTokenUtil.getUsernameFromToken(jwtToken).isEmpty()) {
@@ -58,12 +59,11 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                     isValidToken = false;
                 }
             }
-            
+
             if (isValidToken) {
                 List<SimpleGrantedAuthority> authorities = List.of(
-                    new SimpleGrantedAuthority(isGuest ? "ROLE_GUEST" : "ROLE_USER")
-                );
-                
+                        new SimpleGrantedAuthority(isGuest ? "ROLE_GUEST" : "ROLE_USER"));
+
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                         username, null, authorities);
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));

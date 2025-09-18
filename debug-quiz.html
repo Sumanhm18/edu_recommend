@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Quiz API Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .section { margin: 20px 0; padding: 10px; border: 1px solid #ccc; }
+        .success { color: green; }
+        .error { color: red; }
+        .info { color: blue; }
+        pre { background: #f5f5f5; padding: 10px; overflow-x: auto; }
+        button { padding: 10px 15px; margin: 5px; }
+    </style>
+</head>
+<body>
+    <h1>🎯 Quiz API Debug Tool</h1>
+    
+    <div class="section">
+        <h3>1. Authentication Status</h3>
+        <div id="auth-status"></div>
+        <button onclick="checkAuth()">Check Auth</button>
+        <button onclick="testLogin()">Test Login</button>
+    </div>
+
+    <div class="section">
+        <h3>2. Quiz API Test</h3>
+        <div id="quiz-status"></div>
+        <button onclick="testQuizAPI()">Test Quiz API</button>
+        <button onclick="testDirectAPI()">Test Direct API</button>
+    </div>
+
+    <div class="section">
+        <h3>3. Response Data</h3>
+        <pre id="response-data"></pre>
+    </div>
+
+    <script>
+        function log(message, type = 'info') {
+            console.log(message);
+            const timestamp = new Date().toLocaleTimeString();
+            return `<span class="${type}">[${timestamp}] ${message}</span><br>`;
+        }
+
+        function checkAuth() {
+            const token = localStorage.getItem('authToken');
+            const user = localStorage.getItem('user');
+            
+            let output = '';
+            output += log('Checking authentication...', 'info');
+            output += log(`Token exists: ${!!token}`, token ? 'success' : 'error');
+            output += log(`User data exists: ${!!user}`, user ? 'success' : 'error');
+            
+            if (token) {
+                output += log(`Token: ${token.substring(0, 50)}...`, 'info');
+            }
+            if (user) {
+                output += log(`User: ${user}`, 'info');
+            }
+            
+            document.getElementById('auth-status').innerHTML = output;
+        }
+
+        async function testLogin() {
+            try {
+                const response = await fetch('http://localhost:8080/api/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        phone: '9999999999',
+                        password: 'testpass123'
+                    })
+                });
+                
+                const data = await response.json();
+                document.getElementById('response-data').textContent = JSON.stringify(data, null, 2);
+                
+                if (data.success && data.data?.token) {
+                    localStorage.setItem('authToken', data.data.token);
+                    localStorage.setItem('user', JSON.stringify(data.data));
+                    document.getElementById('auth-status').innerHTML = log('Login successful!', 'success');
+                } else {
+                    document.getElementById('auth-status').innerHTML = log('Login failed!', 'error');
+                }
+            } catch (error) {
+                document.getElementById('auth-status').innerHTML = log(`Login error: ${error.message}`, 'error');
+            }
+        }
+
+        async function testQuizAPI() {
+            const token = localStorage.getItem('authToken');
+            if (!token) {
+                document.getElementById('quiz-status').innerHTML = log('No token found. Please login first.', 'error');
+                return;
+            }
+
+            try {
+                const response = await fetch('http://localhost:8080/api/quiz/available', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                const data = await response.json();
+                document.getElementById('response-data').textContent = JSON.stringify(data, null, 2);
+                
+                if (response.ok) {
+                    document.getElementById('quiz-status').innerHTML = log('Quiz API successful!', 'success');
+                } else {
+                    document.getElementById('quiz-status').innerHTML = log(`Quiz API failed: ${response.status}`, 'error');
+                }
+            } catch (error) {
+                document.getElementById('quiz-status').innerHTML = log(`Quiz API error: ${error.message}`, 'error');
+            }
+        }
+
+        async function testDirectAPI() {
+            try {
+                const response = await fetch('http://localhost:3000/api/quiz', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                });
+                
+                const text = await response.text();
+                document.getElementById('response-data').textContent = text;
+                document.getElementById('quiz-status').innerHTML = log(`Frontend API response: ${response.status}`, response.ok ? 'success' : 'error');
+            } catch (error) {
+                document.getElementById('quiz-status').innerHTML = log(`Direct API error: ${error.message}`, 'error');
+            }
+        }
+
+        // Auto-check auth status on load
+        window.onload = function() {
+            checkAuth();
+        };
+    </script>
+</body>
+</html>

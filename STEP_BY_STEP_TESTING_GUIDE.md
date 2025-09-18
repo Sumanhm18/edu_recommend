@@ -11,6 +11,7 @@
 ## 🚀 **STEP 1: Start the Application**
 
 ### 1.1 Start Spring Boot Application
+
 ```bash
 # Navigate to project directory
 cd /Users/sumanhm/Downloads/education
@@ -23,11 +24,14 @@ sleep 10
 ```
 
 ### 1.2 Verify Application Status
+
 ```bash
 # Test if application is running
 curl -X GET "http://localhost:8080/api/auth/test"
 ```
+
 **Expected Response:**
+
 ```json
 {
   "success": true,
@@ -35,6 +39,7 @@ curl -X GET "http://localhost:8080/api/auth/test"
   "timestamp": 1758113214469
 }
 ```
+
 ✅ **If successful**: Continue to Step 2  
 ❌ **If failed**: Check application logs and restart
 
@@ -43,11 +48,14 @@ curl -X GET "http://localhost:8080/api/auth/test"
 ## 🔐 **STEP 2: Authentication Testing**
 
 ### 2.1 Get Guest Access Token
+
 ```bash
 curl -X POST "http://localhost:8080/api/auth/guest-login" \
   -H "Content-Type: application/json"
 ```
+
 **Expected Response:**
+
 ```json
 {
   "message": "Guest login successful",
@@ -62,16 +70,20 @@ curl -X POST "http://localhost:8080/api/auth/guest-login" \
   "success": true
 }
 ```
+
 📝 **Action**: **Copy the token value** - you'll need it for next steps!
 
 ### 2.2 Test Phone OTP Flow (Optional)
+
 ```bash
 # Send OTP to phone
 curl -X POST "http://localhost:8080/api/auth/send-otp" \
   -H "Content-Type: application/json" \
   -d '{"phoneNumber": "9876543210"}'
 ```
+
 **Expected Response:**
+
 ```json
 {
   "success": true,
@@ -80,13 +92,16 @@ curl -X POST "http://localhost:8080/api/auth/send-otp" \
 ```
 
 ### 2.3 Verify OTP (Optional)
+
 ```bash
 # Verify with default OTP: 123456
 curl -X POST "http://localhost:8080/api/auth/verify-otp" \
   -H "Content-Type: application/json" \
   -d '{"phoneNumber": "9876543210", "otp": "123456"}'
 ```
+
 **Expected Response:**
+
 ```json
 {
   "success": true,
@@ -106,11 +121,14 @@ curl -X POST "http://localhost:8080/api/auth/verify-otp" \
 ## 📚 **STEP 3: Quiz Categories (Public Access)**
 
 ### 3.1 Get Quiz Information
+
 ```bash
 curl -X GET "http://localhost:8080/api/quiz/categories" \
   -H "Content-Type: application/json"
 ```
+
 **Expected Response:**
+
 ```json
 {
   "message": "Quiz categories and information retrieved successfully",
@@ -141,6 +159,7 @@ curl -X GET "http://localhost:8080/api/quiz/categories" \
 ## 📝 **STEP 4: Quiz Discovery & Taking**
 
 ### 4.1 Get Available Quizzes
+
 **HTTP Method**: `GET`  
 **URL**: `http://localhost:8080/api/quiz/available`  
 **Authorization**: Bearer Token (from Step 2.1)
@@ -151,7 +170,9 @@ curl -X GET "http://localhost:8080/api/quiz/available" \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer YOUR_GUEST_TOKEN"
 ```
+
 **Expected Response:**
+
 ```json
 {
   "message": "Available quizzes retrieved successfully",
@@ -165,7 +186,7 @@ curl -X GET "http://localhost:8080/api/quiz/available" \
     },
     {
       "quizId": 2,
-      "title": "Career Interest Assessment", 
+      "title": "Career Interest Assessment",
       "description": "This quiz helps identify your interests and preferences to suggest the most suitable academic stream and career path.",
       "targetClass": "12th",
       "isActive": true
@@ -176,6 +197,7 @@ curl -X GET "http://localhost:8080/api/quiz/available" \
 ```
 
 ### 4.2 Get Quiz Details
+
 **HTTP Method**: `GET`  
 **URL**: `http://localhost:8080/api/quiz/1`  
 **Authorization**: Bearer Token
@@ -185,14 +207,17 @@ curl -X GET "http://localhost:8080/api/quiz/available" \
 curl -X GET "http://localhost:8080/api/quiz/1" \
   -H "Authorization: Bearer YOUR_GUEST_TOKEN"
 ```
+
 **Expected Response:** Full quiz with 12 questions and answer options
 
 ### 4.3 Get Quiz Details for Quiz 2
+
 ```bash
 # Get details for Quiz 2 (Career Interest)
 curl -X GET "http://localhost:8080/api/quiz/2" \
   -H "Authorization: Bearer YOUR_GUEST_TOKEN"
 ```
+
 **Expected Response:** Full quiz with 8 career-focused questions
 
 ---
@@ -200,6 +225,7 @@ curl -X GET "http://localhost:8080/api/quiz/2" \
 ## 🎯 **STEP 5: Submit Quizzes & Get Stream Recommendations**
 
 ### 5.1 Submit General Aptitude Assessment (Perfect Score)
+
 ```bash
 curl -X POST "http://localhost:8080/api/quiz/submit" \
   -H "Content-Type: application/json" \
@@ -222,7 +248,9 @@ curl -X POST "http://localhost:8080/api/quiz/submit" \
     ]
   }'
 ```
+
 **Expected Results:**
+
 ```json
 {
   "message": "Quiz submitted successfully. Stream recommendations generated!",
@@ -246,6 +274,7 @@ curl -X POST "http://localhost:8080/api/quiz/submit" \
 ```
 
 ### 5.2 Submit Career Interest Assessment (Arts Stream)
+
 ```bash
 curl -X POST "http://localhost:8080/api/quiz/submit" \
   -H "Content-Type: application/json" \
@@ -264,7 +293,9 @@ curl -X POST "http://localhost:8080/api/quiz/submit" \
     ]
   }'
 ```
+
 **Expected Results:**
+
 ```json
 {
   "message": "Quiz submitted successfully. Stream recommendations generated!",
@@ -287,6 +318,7 @@ curl -X POST "http://localhost:8080/api/quiz/submit" \
 ## 👤 **STEP 6: Profile Management (If Using Authenticated User)**
 
 ### 6.1 Create User Profile
+
 ```bash
 # Only works with authenticated user token (not guest)
 curl -X POST "http://localhost:8080/api/user/profile" \
@@ -304,12 +336,14 @@ curl -X POST "http://localhost:8080/api/user/profile" \
 ```
 
 ### 6.2 Get User Profile
+
 ```bash
 curl -X GET "http://localhost:8080/api/user/profile" \
   -H "Authorization: Bearer YOUR_AUTH_TOKEN"
 ```
 
 ### 6.3 Update User Profile
+
 ```bash
 curl -X PUT "http://localhost:8080/api/user/profile" \
   -H "Content-Type: application/json" \
@@ -326,18 +360,21 @@ curl -X PUT "http://localhost:8080/api/user/profile" \
 ## 📊 **STEP 7: Quiz History & Analytics (Authenticated Users Only)**
 
 ### 7.1 Get Quiz History
+
 ```bash
 curl -X GET "http://localhost:8080/api/quiz/history" \
   -H "Authorization: Bearer YOUR_AUTH_TOKEN"
 ```
 
 ### 7.2 Get Stream Recommendations Summary
+
 ```bash
 curl -X GET "http://localhost:8080/api/quiz/recommendations" \
   -H "Authorization: Bearer YOUR_AUTH_TOKEN"
 ```
 
 ### 7.3 Get Quiz Statistics
+
 ```bash
 curl -X GET "http://localhost:8080/api/quiz/stats" \
   -H "Authorization: Bearer YOUR_AUTH_TOKEN"
@@ -350,6 +387,7 @@ curl -X GET "http://localhost:8080/api/quiz/stats" \
 After completing all steps, verify these outcomes:
 
 ### Core SIH Requirements:
+
 - ✅ **Aptitude Assessment**: Mathematical, Verbal, Analytical, Technical scores calculated
 - ✅ **Stream Recommendations**: Different answers produce different stream suggestions
 - ✅ **Government College Awareness**: College tier recommendations provided
@@ -357,6 +395,7 @@ After completing all steps, verify these outcomes:
 - ✅ **Real-time Results**: Instant scoring and stream guidance
 
 ### Technical Validation:
+
 - ✅ **Authentication**: Both guest and phone-based auth working
 - ✅ **Quiz Engine**: Both quizzes loading and submitting correctly
 - ✅ **Stream Algorithm**: Science/Commerce/Arts recommendations based on scores
@@ -370,6 +409,7 @@ After completing all steps, verify these outcomes:
 ### Common Issues:
 
 **❌ Connection Refused**
+
 ```bash
 # Check if application is running
 ps aux | grep "education-0.0.1-SNAPSHOT.jar"
@@ -379,6 +419,7 @@ java -jar target/education-0.0.1-SNAPSHOT.jar &
 ```
 
 **❌ 401 Unauthorized**
+
 - Check if you're using the correct token
 - Ensure Authorization header format: `Bearer YOUR_TOKEN`
 - **In Postman**: Use "Bearer Token" auth type and paste ONLY the token (no "Bearer " prefix)
@@ -387,6 +428,7 @@ java -jar target/education-0.0.1-SNAPSHOT.jar &
 - Token may have expired - get a new one from Step 2.1
 
 **❌ 500 Internal Server Error**
+
 ```bash
 # Check application logs
 tail -f logs/spring.log
@@ -396,6 +438,7 @@ curl -X GET "http://localhost:8080/api/auth/test"
 ```
 
 **❌ Token Expired**
+
 - Get a new guest token from Step 2.1
 - Tokens are valid for 24 hours
 
@@ -419,6 +462,7 @@ You've successfully tested the Education MVP if:
 ## 🚀 **AUTOMATION SCRIPT**
 
 For quick testing of all APIs:
+
 ```bash
 # Run automated demonstration
 ./demo_all_apis.sh

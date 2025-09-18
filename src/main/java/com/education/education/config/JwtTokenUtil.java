@@ -16,30 +16,30 @@ import java.util.function.Function;
 
 @Component
 public class JwtTokenUtil {
-    
+
     @Value("${jwt.secret}")
     private String secret;
-    
+
     @Value("${jwt.expiration}")
     private int jwtExpiration;
-    
+
     private SecretKey getSigningKey() {
         return Keys.hmacShaKeyFor(secret.getBytes());
     }
-    
+
     public String getUsernameFromToken(String token) {
         return getClaimFromToken(token, Claims::getSubject);
     }
-    
+
     public Date getExpirationDateFromToken(String token) {
         return getClaimFromToken(token, Claims::getExpiration);
     }
-    
+
     public <T> T getClaimFromToken(String token, Function<Claims, T> claimsResolver) {
         final Claims claims = getAllClaimsFromToken(token);
         return claimsResolver.apply(claims);
     }
-    
+
     private Claims getAllClaimsFromToken(String token) {
         return Jwts.parserBuilder()
                 .setSigningKey(getSigningKey())
@@ -47,30 +47,30 @@ public class JwtTokenUtil {
                 .parseClaimsJws(token)
                 .getBody();
     }
-    
+
     private Boolean isTokenExpired(String token) {
         final Date expiration = getExpirationDateFromToken(token);
         return expiration.before(new Date());
     }
-    
+
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
         return createToken(claims, userDetails.getUsername());
     }
-    
+
     public String generateTokenForUser(String phoneNumber, Long userId) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("userId", userId);
         claims.put("guest", false);
         return createToken(claims, phoneNumber);
     }
-    
+
     public String generateTokenForGuest(String guestId) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("guest", true);
         return createToken(claims, guestId);
     }
-    
+
     public Long getUserIdFromToken(String token) {
         Claims claims = getAllClaimsFromToken(token);
         Object userIdObj = claims.get("userId");
@@ -79,7 +79,7 @@ public class JwtTokenUtil {
         }
         return null;
     }
-    
+
     private String createToken(Map<String, Object> claims, String subject) {
         return Jwts.builder()
                 .setClaims(claims)
@@ -89,17 +89,17 @@ public class JwtTokenUtil {
                 .signWith(getSigningKey(), SignatureAlgorithm.HS512)
                 .compact();
     }
-    
+
     public Boolean validateToken(String token, UserDetails userDetails) {
         final String username = getUsernameFromToken(token);
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
-    
+
     public Boolean validateTokenForGuest(String token, String guestId) {
         final String tokenSubject = getUsernameFromToken(token);
         return (tokenSubject.equals(guestId) && !isTokenExpired(token));
     }
-    
+
     public Boolean isGuestToken(String token) {
         Claims claims = getAllClaimsFromToken(token);
         return claims.get("guest", Boolean.class) != null && claims.get("guest", Boolean.class);

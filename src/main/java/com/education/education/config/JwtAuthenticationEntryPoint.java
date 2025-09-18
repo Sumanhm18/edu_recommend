@@ -15,20 +15,20 @@ import java.util.Map;
 
 @Component
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint, Serializable {
-    
+
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response,
-                         AuthenticationException authException) throws IOException {
-        
+            AuthenticationException authException) throws IOException {
+
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-        
+
         Map<String, Object> body = new HashMap<>();
         body.put("status", HttpServletResponse.SC_UNAUTHORIZED);
         body.put("error", "Unauthorized");
         body.put("message", "Authentication required to access this resource");
         body.put("path", request.getServletPath());
-        
+
         final ObjectMapper mapper = new ObjectMapper();
         mapper.writeValue(response.getOutputStream(), body);
     }

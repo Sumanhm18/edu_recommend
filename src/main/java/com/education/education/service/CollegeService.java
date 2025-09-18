@@ -13,10 +13,10 @@ import java.util.stream.Collectors;
 
 @Service
 public class CollegeService {
-    
+
     @Autowired
     private CollegeRepository collegeRepository;
-    
+
     /**
      * Search colleges by district
      */
@@ -26,7 +26,7 @@ public class CollegeService {
                 .map(this::convertToSearchDto)
                 .collect(Collectors.toList());
     }
-    
+
     /**
      * Search colleges by state
      */
@@ -36,17 +36,18 @@ public class CollegeService {
                 .map(this::convertToSearchDto)
                 .collect(Collectors.toList());
     }
-    
+
     /**
      * Search colleges by district and state
      */
     public List<CollegeSearchDto> findCollegesByLocation(String district, String state) {
-        List<College> colleges = collegeRepository.findByDistrictIgnoreCaseAndStateIgnoreCaseAndIsActiveTrue(district, state);
+        List<College> colleges = collegeRepository.findByDistrictIgnoreCaseAndStateIgnoreCaseAndIsActiveTrue(district,
+                state);
         return colleges.stream()
                 .map(this::convertToSearchDto)
                 .collect(Collectors.toList());
     }
-    
+
     /**
      * Search colleges by type (Government, Private, etc.)
      */
@@ -56,7 +57,7 @@ public class CollegeService {
                 .map(this::convertToSearchDto)
                 .collect(Collectors.toList());
     }
-    
+
     /**
      * Search government colleges by district
      */
@@ -66,7 +67,7 @@ public class CollegeService {
                 .map(this::convertToSearchDto)
                 .collect(Collectors.toList());
     }
-    
+
     /**
      * Search government colleges by state
      */
@@ -76,7 +77,7 @@ public class CollegeService {
                 .map(this::convertToSearchDto)
                 .collect(Collectors.toList());
     }
-    
+
     /**
      * Search colleges by stream (Science, Commerce, Arts)
      */
@@ -86,7 +87,7 @@ public class CollegeService {
                 .map(this::convertToSearchDto)
                 .collect(Collectors.toList());
     }
-    
+
     /**
      * Search colleges by district and stream
      */
@@ -96,7 +97,7 @@ public class CollegeService {
                 .map(this::convertToSearchDto)
                 .collect(Collectors.toList());
     }
-    
+
     /**
      * Search colleges by state and stream
      */
@@ -106,7 +107,7 @@ public class CollegeService {
                 .map(this::convertToSearchDto)
                 .collect(Collectors.toList());
     }
-    
+
     /**
      * Advanced search with multiple criteria
      */
@@ -116,7 +117,7 @@ public class CollegeService {
                 .map(this::convertToSearchDto)
                 .collect(Collectors.toList());
     }
-    
+
     /**
      * Find colleges by name (partial match)
      */
@@ -126,7 +127,7 @@ public class CollegeService {
                 .map(this::convertToSearchDto)
                 .collect(Collectors.toList());
     }
-    
+
     /**
      * Get detailed college information by ID
      */
@@ -134,7 +135,7 @@ public class CollegeService {
         Optional<College> college = collegeRepository.findById(collegeId);
         return college.map(this::convertToDetailsDto);
     }
-    
+
     /**
      * Get top colleges by district (Premier and Excellent tier)
      */
@@ -144,7 +145,7 @@ public class CollegeService {
                 .map(this::convertToSearchDto)
                 .collect(Collectors.toList());
     }
-    
+
     /**
      * Get colleges with high placement rates
      */
@@ -154,21 +155,22 @@ public class CollegeService {
                 .map(this::convertToSearchDto)
                 .collect(Collectors.toList());
     }
-    
+
     /**
      * Get college recommendations based on stream and location
      * This method will be used by the quiz recommendation engine
      */
-    public List<CollegeSearchDto> getRecommendedColleges(String recommendedStream, String userDistrict, String performanceLevel) {
+    public List<CollegeSearchDto> getRecommendedColleges(String recommendedStream, String userDistrict,
+            String performanceLevel) {
         // Start with colleges in user's district that offer the recommended stream
         List<College> colleges = collegeRepository.findByDistrictAndStreamOffered(userDistrict, recommendedStream);
-        
+
         // If no colleges found in district, expand to state
         if (colleges.isEmpty() && userDistrict != null) {
             // We need to get state from district - for now use generic search
             colleges = collegeRepository.findByStreamOffered(recommendedStream);
         }
-        
+
         // Filter by performance level if specified
         if ("Excellent".equals(performanceLevel)) {
             colleges = colleges.stream()
@@ -179,14 +181,14 @@ public class CollegeService {
                     .filter(c -> !"Foundation".equals(c.getCollegeTier()))
                     .collect(Collectors.toList());
         }
-        
+
         // Limit to top 10 recommendations
         return colleges.stream()
                 .limit(10)
                 .map(this::convertToSearchDto)
                 .collect(Collectors.toList());
     }
-    
+
     /**
      * Convert College entity to CollegeSearchDto
      */
@@ -204,7 +206,7 @@ public class CollegeService {
         dto.setPlacementRate(college.getPlacementRate());
         return dto;
     }
-    
+
     /**
      * Convert College entity to CollegeDetailsDto
      */
