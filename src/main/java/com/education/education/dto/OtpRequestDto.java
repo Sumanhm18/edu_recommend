@@ -1,20 +1,20 @@
 package com.education.education.dto;
 
 public class OtpRequestDto {
-    private String phoneNumber;
+    private String email;
 
     public OtpRequestDto() {
     }
 
-    public OtpRequestDto(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public OtpRequestDto(String email) {
+        this.email = email;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
+    public String getEmail() {
+        return email;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

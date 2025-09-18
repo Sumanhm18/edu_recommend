@@ -70,101 +70,62 @@ public class GeminiAIService {
 
     private String buildCollegeRecommendationPrompt(Map<String, Object> userProfile) {
         StringBuilder prompt = new StringBuilder();
-        prompt.append("You are an expert educational counselor. Based on the following student profile, ");
-        prompt.append("provide comprehensive GOVERNMENT college recommendations ONLY in India. ");
-        prompt.append("FOCUS EXCLUSIVELY on government institutions, public universities, IITs, NITs, IIITs, central universities, state universities, and government-funded colleges. ");
-        prompt.append("DO NOT recommend any private or deemed universities. ");
-        prompt.append("Respond in JSON format with the structure specified below.\n\n");
+        prompt.append("You are an educational counselor. Recommend 5 specific colleges for this student. ");
+        prompt.append("Include only government  from Karnataka, India.prioritize the location and give the results based ont the lcoation of the student.and prioritize ");
+        prompt.append("You MUST provide exactly 5 colleges in the topColleges array.\n\n");
 
         prompt.append("Student Profile:\n");
-        prompt.append("- Total Quiz Score: ").append(userProfile.get("totalScore")).append("/100\n");
-        prompt.append("- Recommended Stream: ").append(userProfile.get("recommendedStream")).append("\n");
+        prompt.append("- Quiz Score: ").append(userProfile.get("score")).append("/").append(userProfile.get("maxScore"))
+                .append("\n");
+        prompt.append("- Percentage: ").append(userProfile.get("percentage")).append("%\n");
+        prompt.append("- Performance Level: ").append(userProfile.get("performanceLevel")).append("\n");
+        prompt.append("- Recommended Streams: ").append(userProfile.get("recommendedStreams")).append("\n");
         prompt.append("- Location: ").append(userProfile.get("district")).append(", ").append(userProfile.get("state"))
                 .append("\n");
-        prompt.append("- Academic Interests: ").append(userProfile.get("interests")).append("\n");
+        prompt.append("- Class Level: ").append(userProfile.get("classLevel")).append("\n");
 
-        if (userProfile.containsKey("preferredCollegeType")) {
-            prompt.append("- Preferred College Type: ").append(userProfile.get("preferredCollegeType")).append("\n");
-        }
-
-        prompt.append("\nPlease provide recommendations in this exact JSON format:\n");
+        prompt.append("\nRespond ONLY with this JSON format (no extra text):\n");
         prompt.append("{\n");
         prompt.append("  \"topColleges\": [\n");
         prompt.append("    {\n");
-        prompt.append("      \"name\": \"College Name\",\n");
-        prompt.append("      \"location\": \"City, State\",\n");
+        prompt.append("      \"name\": \"Bangalore University\",\n");
+        prompt.append("      \"location\": \"Bangalore, Karnataka\",\n");
         prompt.append("      \"type\": \"Government\",\n");
-        prompt.append("      \"tier\": \"Premier/Excellent/Good\",\n");
-        prompt.append("      \"coursesRecommended\": [\"Course 1\", \"Course 2\"],\n");
-        prompt.append("      \"admissionProcess\": \"Brief description\",\n");
-        prompt.append("      \"estimatedFees\": \"Fee range\",\n");
-        prompt.append("      \"placementHighlights\": \"Brief highlights\",\n");
-        prompt.append("      \"whyRecommended\": \"Reason for recommendation\"\n");
+        prompt.append("      \"tier\": \"Excellent\",\n");
+        prompt.append("      \"coursesRecommended\": [\"B.Com\", \"B.Sc\"],\n");
+        prompt.append("      \"admissionProcess\": \"Merit based\",\n");
+        prompt.append("      \"estimatedFees\": \"₹20,000 per year\",\n");
+        prompt.append("      \"placementHighlights\": \"Good placements\",\n");
+        prompt.append("      \"whyRecommended\": \"Government college with good reputation\"\n");
         prompt.append("    }\n");
         prompt.append("  ],\n");
         prompt.append("  \"alternativeOptions\": [\n");
         prompt.append("    {\n");
-        prompt.append("      \"name\": \"Alternative College\",\n");
-        prompt.append("      \"location\": \"City, State\",\n");
-        prompt.append("      \"type\": \"Government\",\n");
-        prompt.append("      \"specialization\": \"Key strength\",\n");
-        prompt.append("      \"whyConsider\": \"Reason to consider\"\n");
+        prompt.append("      \"name\": \"Mount Carmel College\",\n");
+        prompt.append("      \"location\": \"Bangalore, Karnataka\",\n");
+        prompt.append("      \"type\": \"Private\",\n");
+        prompt.append("      \"specialization\": \"Liberal Arts\",\n");
+        prompt.append("      \"whyConsider\": \"Excellent academics\"\n");
         prompt.append("    }\n");
         prompt.append("  ],\n");
         prompt.append("  \"entranceExams\": [\n");
         prompt.append("    {\n");
-        prompt.append("      \"examName\": \"Exam Name\",\n");
-        prompt.append("      \"eligibility\": \"Eligibility criteria\",\n");
-        prompt.append("      \"preparationTips\": \"Key preparation tips\"\n");
+        prompt.append("      \"examName\": \"Karnataka CET\",\n");
+        prompt.append("      \"eligibility\": \"12th grade\",\n");
+        prompt.append("      \"preparationTips\": \"Focus on state syllabus\"\n");
         prompt.append("    }\n");
         prompt.append("  ],\n");
         prompt.append("  \"actionPlan\": {\n");
-        prompt.append("    \"immediate\": [\"Action 1\", \"Action 2\"],\n");
-        prompt.append("    \"next6Months\": [\"Goal 1\", \"Goal 2\"],\n");
-        prompt.append("    \"nextYear\": [\"Milestone 1\", \"Milestone 2\"]\n");
+        prompt.append("    \"immediate\": [\"Research colleges\", \"Prepare documents\"],\n");
+        prompt.append("    \"next6Months\": [\"Apply to colleges\"],\n");
+        prompt.append("    \"nextYear\": [\"Start college\"]\n");
         prompt.append("  }\n");
         prompt.append("}\n\n");
 
-        // Enhanced location-based prioritization
-        prompt.append("IMPORTANT LOCATION-BASED REQUIREMENTS:\n");
-        prompt.append("1. PRIORITIZE colleges in ").append(userProfile.get("district")).append(", ")
-                .append(userProfile.get("state")).append(" FIRST\n");
-        prompt.append("2. Next, include colleges in neighboring districts of ").append(userProfile.get("state"))
-                .append("\n");
-        prompt.append("3. Then include other top colleges in ").append(userProfile.get("state")).append("\n");
-        prompt.append("4. Finally, include 1-2 premier institutions from neighboring states if highly relevant\n\n");
-
-        prompt.append("RANKING CRITERIA (in order of importance):\n");
-        prompt.append("1. Geographic proximity to ").append(userProfile.get("district")).append(", ")
-                .append(userProfile.get("state")).append(" (HIGHEST PRIORITY)\n");
-        prompt.append("2. Student's quiz score compatibility (").append(userProfile.get("score")).append("/")
-                .append(userProfile.get("maxScore")).append(")\n");
-        prompt.append("3. Course availability in recommended stream: ").append(userProfile.get("recommendedStreams"))
-                .append("\n");
-        prompt.append("4. College reputation and placement record\n");
-        prompt.append("5. Affordability and accessibility from student's location\n\n");
-
-        prompt.append("GOVERNMENT COLLEGE REQUIREMENTS:\n");
-        prompt.append("- RECOMMEND ONLY government colleges: IITs, NITs, IIITs, central universities, state universities, local government colleges, district colleges, government polytechnics\n");
-        prompt.append("- Include LOCAL government colleges, municipal colleges, state board colleges, and district-level government institutions\n");
-        prompt.append("- NO private colleges, deemed universities, or autonomous institutions\n");
-        prompt.append("- Focus on affordability and government funding benefits\n");
-        prompt.append("- Prioritize institutions with government job placement opportunities\n");
-        prompt.append("- Mention government scholarships and financial aid available\n");
-        prompt.append("- Give preference to nearby local government colleges for accessibility and cost-effectiveness\n\n");
-        
-        prompt.append("LOCATION REQUIREMENTS:\n");
-        prompt.append("- Ensure that AT LEAST 70% of recommended colleges are within ").append(userProfile.get("state"))
-                .append("\n");
-        prompt.append("- Consider travel distance, local accommodation costs, and regional opportunities\n");
-        prompt.append(
-                "- Mention specific advantages of studying close to home (family support, local networks, cost savings)\n");
-        prompt.append("- Include information about local transportation and connectivity\n");
-        prompt.append("- Prioritize colleges with good local industry connections in ")
-                .append(userProfile.get("district")).append(" area\n\n");
-
-        prompt.append(
-                "FOCUS EXCLUSIVELY on government institutions. Provide practical and actionable advice with specific focus on government college benefits and location advantages.");
+        prompt.append("IMPORTANT: Provide exactly 5 colleges in topColleges array. ");
+        prompt.append("Use real college names from Karnataka. ");
+        prompt.append("Include both government and private options. ");
+        prompt.append("Respond ONLY with valid JSON - no extra text before or after.");
 
         return prompt.toString();
     }
@@ -263,15 +224,74 @@ public class GeminiAIService {
 
     private Map<String, Object> parseCollegeRecommendations(String response) {
         try {
+            System.out.println("🔍 Parsing Gemini response...");
+            System.out.println(
+                    "📋 Raw response (first 500 chars): " + response.substring(0, Math.min(500, response.length())));
+
             // Extract JSON from response (in case there's extra text)
             String jsonString = extractJSON(response);
+            System.out.println("📋 Extracted JSON (first 300 chars): "
+                    + jsonString.substring(0, Math.min(300, jsonString.length())));
+
             @SuppressWarnings("unchecked")
             Map<String, Object> result = objectMapper.readValue(jsonString, Map.class);
+
+            // Check if topColleges exists and has content
+            if (result.containsKey("topColleges")) {
+                @SuppressWarnings("unchecked")
+                List<Object> topColleges = (List<Object>) result.get("topColleges");
+                System.out.println(
+                        "📊 Number of colleges in AI response: " + (topColleges != null ? topColleges.size() : 0));
+
+                if (topColleges == null || topColleges.isEmpty()) {
+                    System.out.println("⚠️ AI returned empty or null topColleges array");
+                    // Instead of returning fallback, let's add some colleges to the result
+                    result.put("topColleges", createDefaultCollegeList());
+                    System.out.println("✅ Added default colleges to AI response");
+                }
+            } else {
+                System.out.println("⚠️ AI response missing topColleges field");
+                result.put("topColleges", createDefaultCollegeList());
+                System.out.println("✅ Added default colleges to AI response");
+            }
+
             return result;
         } catch (Exception e) {
-            System.err.println("Error parsing Gemini response: " + e.getMessage());
+            System.err.println("❌ Error parsing Gemini response: " + e.getMessage());
+            e.printStackTrace();
+            System.out.println("🔄 Using fallback recommendations due to parsing error");
             return getFallbackRecommendations();
         }
+    }
+
+    private List<Map<String, Object>> createDefaultCollegeList() {
+        List<Map<String, Object>> colleges = new ArrayList<>();
+
+        Map<String, Object> college1 = new HashMap<>();
+        college1.put("name", "Bangalore University");
+        college1.put("location", "Bangalore, Karnataka");
+        college1.put("type", "Government");
+        college1.put("tier", "Excellent");
+        college1.put("coursesRecommended", List.of("B.Com", "B.Sc", "B.A"));
+        college1.put("admissionProcess", "Merit-based admission");
+        college1.put("estimatedFees", "₹15,000 - ₹35,000 per year");
+        college1.put("placementHighlights", "Good placement opportunities in Bangalore");
+        college1.put("whyRecommended", "Government university with strong academic reputation");
+        colleges.add(college1);
+
+        Map<String, Object> college2 = new HashMap<>();
+        college2.put("name", "University of Mysore");
+        college2.put("location", "Mysore, Karnataka");
+        college2.put("type", "Government");
+        college2.put("tier", "Excellent");
+        college2.put("coursesRecommended", List.of("B.Sc", "B.Com", "B.A"));
+        college2.put("admissionProcess", "Karnataka CET based admission");
+        college2.put("estimatedFees", "₹10,000 - ₹25,000 per year");
+        college2.put("placementHighlights", "Historic university with good industry connections");
+        college2.put("whyRecommended", "Well-established university with affordable education");
+        colleges.add(college2);
+
+        return colleges;
     }
 
     private Map<String, Object> parseCareerGuidance(String response) {
@@ -299,22 +319,23 @@ public class GeminiAIService {
     }
 
     private Map<String, Object> getFallbackRecommendations() {
-        System.out.println("🔄 Using location-aware fallback recommendations...");
+        System.out.println("🔄 Using enhanced fallback recommendations...");
         Map<String, Object> fallback = new HashMap<>();
 
         List<Map<String, Object>> topColleges = new ArrayList<>();
 
-        // Location-aware fallback colleges for Karnataka
+        // Add realistic Karnataka colleges
         Map<String, Object> college1 = new HashMap<>();
         college1.put("name", "University of Mysore");
         college1.put("location", "Mysore, Karnataka");
         college1.put("type", "Government");
         college1.put("tier", "Excellent");
-        college1.put("coursesRecommended", List.of("B.Sc Physics", "B.Com", "B.A"));
-        college1.put("admissionProcess", "Merit-based admission");
-        college1.put("estimatedFees", "₹8,000 - ₹30,000");
-        college1.put("placementHighlights", "Good placement opportunities in local industry");
-        college1.put("whyRecommended", "Close to home in Karnataka, excellent reputation and affordable fees");
+        college1.put("coursesRecommended", List.of("B.Sc Physics", "B.Com", "B.A Economics", "B.Sc Computer Science"));
+        college1.put("admissionProcess", "Merit-based admission through Karnataka CET");
+        college1.put("estimatedFees", "₹8,000 - ₹30,000 per year");
+        college1.put("placementHighlights", "Good placement opportunities in local industry and MNCs");
+        college1.put("whyRecommended",
+                "Historic university in Karnataka with excellent reputation and affordable fees");
         topColleges.add(college1);
 
         Map<String, Object> college2 = new HashMap<>();
@@ -322,99 +343,104 @@ public class GeminiAIService {
         college2.put("location", "Bangalore, Karnataka");
         college2.put("type", "Government");
         college2.put("tier", "Excellent");
-        college2.put("coursesRecommended", List.of("B.Sc Computer Science", "B.Com", "BBA"));
+        college2.put("coursesRecommended", List.of("B.Sc Computer Science", "B.Com", "BBA", "B.Sc Mathematics"));
         college2.put("admissionProcess", "Merit-based admission");
-        college2.put("estimatedFees", "₹10,000 - ₹40,000");
-        college2.put("placementHighlights", "Excellent placement opportunities in IT capital");
-        college2.put("whyRecommended", "Located in IT hub of Karnataka, great career opportunities");
+        college2.put("estimatedFees", "₹10,000 - ₹40,000 per year");
+        college2.put("placementHighlights", "Excellent placement opportunities in IT capital of India");
+        college2.put("whyRecommended", "Located in IT hub with great career opportunities and industry connections");
         topColleges.add(college2);
 
-        // Add local government colleges
         Map<String, Object> college3 = new HashMap<>();
         college3.put("name", "Government Science College");
         college3.put("location", "Bangalore, Karnataka");
         college3.put("type", "Government");
         college3.put("tier", "Good");
-        college3.put("coursesRecommended", List.of("B.Sc Physics", "B.Sc Chemistry", "B.Sc Mathematics"));
+        college3.put("coursesRecommended",
+                List.of("B.Sc Physics", "B.Sc Chemistry", "B.Sc Mathematics", "B.Sc Biology"));
         college3.put("admissionProcess", "Merit-based admission");
-        college3.put("estimatedFees", "₹5,000 - ₹15,000");
+        college3.put("estimatedFees", "₹5,000 - ₹15,000 per year");
         college3.put("placementHighlights", "Good opportunities in research and government jobs");
-        college3.put("whyRecommended", "Local government college with excellent science programs and very affordable fees");
+        college3.put("whyRecommended", "Government college with excellent science programs and very affordable fees");
         topColleges.add(college3);
 
         Map<String, Object> college4 = new HashMap<>();
-        college4.put("name", "Government First Grade College");
-        college4.put("location", "Mysore, Karnataka");
-        college4.put("type", "Government");
-        college4.put("tier", "Good");
-        college4.put("coursesRecommended", List.of("B.Com", "B.A", "B.Sc"));
-        college4.put("admissionProcess", "Merit-based admission");
-        college4.put("estimatedFees", "₹3,000 - ₹12,000");
-        college4.put("placementHighlights", "Local placement opportunities and government job preparation");
-        college4.put("whyRecommended", "Very affordable local government college with strong academic foundation");
+        college4.put("name", "Mount Carmel College");
+        college4.put("location", "Bangalore, Karnataka");
+        college4.put("type", "Private");
+        college4.put("tier", "Excellent");
+        college4.put("coursesRecommended", List.of("B.Com", "B.A", "B.Sc", "BBA"));
+        college4.put("admissionProcess", "Merit-based with entrance test");
+        college4.put("estimatedFees", "₹50,000 - ₹1,20,000 per year");
+        college4.put("placementHighlights", "Excellent placement record with top companies");
+        college4.put("whyRecommended", "Premier women's college with outstanding academic reputation");
         topColleges.add(college4);
+
+        Map<String, Object> college5 = new HashMap<>();
+        college5.put("name", "St. Joseph's College");
+        college5.put("location", "Bangalore, Karnataka");
+        college5.put("type", "Private");
+        college5.put("tier", "Premier");
+        college5.put("coursesRecommended", List.of("B.Com", "B.A Economics", "B.Sc", "BBA"));
+        college5.put("admissionProcess", "Entrance test and merit-based");
+        college5.put("estimatedFees", "₹80,000 - ₹1,50,000 per year");
+        college5.put("placementHighlights", "Top-tier placements with multinational companies");
+        college5.put("whyRecommended", "Prestigious college with excellent academic standards and alumni network");
+        topColleges.add(college5);
 
         fallback.put("topColleges", topColleges);
 
-        // Add Karnataka-focused alternative options
+        // Add more alternative options
         List<Map<String, Object>> alternativeOptions = new ArrayList<>();
+
         Map<String, Object> alt1 = new HashMap<>();
         alt1.put("name", "Mangalore University");
         alt1.put("location", "Mangalore, Karnataka");
         alt1.put("type", "Government");
         alt1.put("specialization", "Strong in Commerce and Arts");
-        alt1.put("whyConsider", "Coastal location in Karnataka with good academic reputation");
+        alt1.put("whyConsider", "Coastal location with good academic reputation and affordable fees");
         alternativeOptions.add(alt1);
 
         Map<String, Object> alt2 = new HashMap<>();
-        alt2.put("name", "Gulbarga University");
-        alt2.put("location", "Gulbarga, Karnataka");
-        alt2.put("type", "Government");
+        alt2.put("name", "Christ University");
+        alt2.put("location", "Bangalore, Karnataka");
+        alt2.put("type", "Private");
         alt2.put("specialization", "Wide range of undergraduate programs");
-        alt2.put("whyConsider", "Affordable education within Karnataka state");
+        alt2.put("whyConsider", "Excellent infrastructure and placement opportunities");
         alternativeOptions.add(alt2);
 
-        // Add more local government colleges
         Map<String, Object> alt3 = new HashMap<>();
-        alt3.put("name", "Government Engineering College, Hassan");
-        alt3.put("location", "Hassan, Karnataka");
-        alt3.put("type", "Government");
-        alt3.put("specialization", "Engineering and technical education");
-        alt3.put("whyConsider", "Local government engineering college with industry connections");
+        alt3.put("name", "PES University");
+        alt3.put("location", "Bangalore, Karnataka");
+        alt3.put("type", "Private");
+        alt3.put("specialization", "Engineering and technology programs");
+        alt3.put("whyConsider", "Strong industry connections and good placement record");
         alternativeOptions.add(alt3);
-
-        Map<String, Object> alt4 = new HashMap<>();
-        alt4.put("name", "Government Polytechnic College");
-        alt4.put("location", "Hubli, Karnataka");
-        alt4.put("type", "Government");
-        alt4.put("specialization", "Technical and diploma courses");
-        alt4.put("whyConsider", "Practical technical education at very affordable government rates");
-        alternativeOptions.add(alt4);
-
-        Map<String, Object> alt5 = new HashMap<>();
-        alt5.put("name", "District Government College");
-        alt5.put("location", "Mangalore, Karnataka");
-        alt5.put("type", "Government");
-        alt5.put("specialization", "Commerce and liberal arts");
-        alt5.put("whyConsider", "Local district college with coastal region advantages");
-        alternativeOptions.add(alt5);
 
         fallback.put("alternativeOptions", alternativeOptions);
 
         // Add relevant entrance exams
         List<Map<String, Object>> entranceExams = new ArrayList<>();
         Map<String, Object> exam1 = new HashMap<>();
-        exam1.put("examName", "Karnataka CET");
-        exam1.put("eligibility", "12th grade completion");
-        exam1.put("preparationTips", "Focus on state syllabus and previous year papers");
+        exam1.put("examName", "Karnataka CET (KCET)");
+        exam1.put("eligibility", "12th grade completion with relevant subjects");
+        exam1.put("preparationTips", "Focus on state syllabus, practice previous year papers, and time management");
         entranceExams.add(exam1);
+
+        Map<String, Object> exam2 = new HashMap<>();
+        exam2.put("examName", "COMEDK UGET");
+        exam2.put("eligibility", "12th grade with PCM/PCB subjects");
+        exam2.put("preparationTips", "Focus on NCERT concepts and practice mock tests");
+        entranceExams.add(exam2);
 
         fallback.put("entranceExams", entranceExams);
 
         Map<String, Object> actionPlan = new HashMap<>();
-        actionPlan.put("immediate", List.of("Research colleges", "Prepare for entrance exams"));
-        actionPlan.put("next6Months", List.of("Apply to colleges", "Focus on studies"));
-        actionPlan.put("nextYear", List.of("Start college", "Build network"));
+        actionPlan.put("immediate", List.of("Research college admission requirements", "Prepare for entrance exams",
+                "Gather necessary documents"));
+        actionPlan.put("next6Months",
+                List.of("Apply to selected colleges", "Prepare for interviews", "Focus on academic performance"));
+        actionPlan.put("nextYear",
+                List.of("Begin college journey", "Join relevant clubs and activities", "Build professional network"));
         fallback.put("actionPlan", actionPlan);
 
         return fallback;

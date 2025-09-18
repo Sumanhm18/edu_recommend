@@ -1,23 +1,23 @@
 package com.education.education.dto;
 
 public class OtpVerifyDto {
-    private String phoneNumber;
+    private String email;
     private String otp;
 
     public OtpVerifyDto() {
     }
 
-    public OtpVerifyDto(String phoneNumber, String otp) {
-        this.phoneNumber = phoneNumber;
+    public OtpVerifyDto(String email, String otp) {
+        this.email = email;
         this.otp = otp;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
+    public String getEmail() {
+        return email;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getOtp() {

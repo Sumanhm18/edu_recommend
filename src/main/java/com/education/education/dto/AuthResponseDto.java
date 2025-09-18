@@ -6,16 +6,27 @@ public class AuthResponseDto {
     private Long userId;
     private String name;
     private String phone;
+    private String email;
     private boolean isGuest;
 
     public AuthResponseDto() {
     }
 
-    public AuthResponseDto(String token, Long userId, String name, String phone, boolean isGuest) {
+    public AuthResponseDto(String token, Long userId, String name, String email, boolean isGuest) {
+        this.token = token;
+        this.userId = userId;
+        this.name = name;
+        this.email = email;
+        this.isGuest = isGuest;
+    }
+
+    // Overloaded constructor for backward compatibility
+    public AuthResponseDto(String token, Long userId, String name, String phone, String email, boolean isGuest) {
         this.token = token;
         this.userId = userId;
         this.name = name;
         this.phone = phone;
+        this.email = email;
         this.isGuest = isGuest;
     }
 
@@ -57,6 +68,14 @@ public class AuthResponseDto {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public boolean isGuest() {

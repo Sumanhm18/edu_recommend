@@ -61,8 +61,51 @@ public class UserService {
         return createOrGetUser(phone, name, classLevel, district, language, null);
     }
 
+    public User createOrGetUserByEmail(String email, String name, String classLevel, String district, String language,
+            String password) {
+        Optional<User> existingUser = userRepository.findByEmail(email);
+
+        if (existingUser.isPresent()) {
+            User user = existingUser.get();
+            // Update user details if provided
+            if (name != null && !name.isEmpty()) {
+                user.setName(name);
+            }
+            if (classLevel != null && !classLevel.isEmpty()) {
+                user.setClassLevel(classLevel);
+            }
+            if (district != null && !district.isEmpty()) {
+                user.setDistrict(district);
+            }
+            if (language != null && !language.isEmpty()) {
+                user.setPreferredLanguage(language);
+            }
+            if (password != null && !password.isEmpty()) {
+                user.setPassword(passwordEncoder.encode(password));
+            }
+            return userRepository.save(user);
+        } else {
+            // Create new user
+            User newUser = new User();
+            newUser.setEmail(email);
+            newUser.setName(name != null ? name : "User");
+            newUser.setClassLevel(classLevel);
+            newUser.setDistrict(district);
+            newUser.setPreferredLanguage(language != null ? language : "English");
+            newUser.setIsGuest(false);
+            if (password != null && !password.isEmpty()) {
+                newUser.setPassword(passwordEncoder.encode(password));
+            }
+            return userRepository.save(newUser);
+        }
+    }
+
     public User findByPhone(String phone) {
         return userRepository.findByPhone(phone).orElse(null);
+    }
+
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email).orElse(null);
     }
 
     public User findById(Long userId) {
@@ -71,6 +114,10 @@ public class UserService {
 
     public boolean existsByPhone(String phone) {
         return userRepository.existsByPhone(phone);
+    }
+
+    public boolean existsByEmail(String email) {
+        return userRepository.existsByEmail(email);
     }
 
     public boolean verifyPassword(User user, String rawPassword) {

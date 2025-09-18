@@ -8,7 +8,12 @@ import {
   OtpResponse,
   Quiz, 
   QuizSubmission, 
-  QuizSubmissionResponse 
+  QuizSubmissionResponse,
+  ChatRequest,
+  ChatResponse,
+  ChatConversation,
+  ChatMessage,
+  NewConversationRequest
 } from '../types';
 
 const API_BASE_URL = 'http://localhost:8080/api';
@@ -159,6 +164,36 @@ export const quizService = {
 
   getRecommendationsSummary: async (): Promise<any> => {
     const response = await api.get('/quiz/recommendations-summary');
+    return response.data;
+  }
+};
+
+// Chatbot Services
+export const chatbotService = {
+  sendMessage: async (chatRequest: ChatRequest): Promise<ChatResponse> => {
+    const response: AxiosResponse<ChatResponse> = await api.post('/chatbot/chat', chatRequest, {
+      timeout: 60000 // 60 seconds timeout for AI responses
+    });
+    return response.data;
+  },
+
+  getConversationHistory: async (conversationId: number): Promise<ChatMessage[]> => {
+    const response: AxiosResponse<ChatMessage[]> = await api.get(`/chatbot/conversation/${conversationId}/history`);
+    return response.data;
+  },
+
+  getUserConversations: async (userId: number): Promise<ChatConversation[]> => {
+    const response: AxiosResponse<ChatConversation[]> = await api.get(`/chatbot/user/${userId}/conversations`);
+    return response.data;
+  },
+
+  createNewConversation: async (request: NewConversationRequest): Promise<ChatConversation> => {
+    const response: AxiosResponse<ChatConversation> = await api.post('/chatbot/conversation/new', request);
+    return response.data;
+  },
+
+  healthCheck: async (): Promise<string> => {
+    const response: AxiosResponse<string> = await api.get('/chatbot/health');
     return response.data;
   }
 };

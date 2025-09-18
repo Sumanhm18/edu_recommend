@@ -21,6 +21,9 @@ public class User {
     @Column(unique = true)
     private String phone;
 
+    @Column(unique = true)
+    private String email;
+
     private String password;
 
     @Column(name = "class_level")
@@ -83,6 +86,14 @@ public class User {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {
