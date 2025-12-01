@@ -158,38 +158,3 @@ export interface QuizSubmissionResponse {
   message: string;
   timestamp: number;
 }
-
-// Chatbot Types
-export interface ChatMessage {
-  messageId: number;
-  content: string;
-  messageType: 'USER' | 'ASSISTANT' | 'SYSTEM';
-  timestamp: string;
-  metadata?: string;
-}
-
-export interface ChatConversation {
-  conversationId: number;
-  title: string;
-  createdAt: string;
-  updatedAt: string;
-  isActive: boolean;
-  messages?: ChatMessage[];
-}
-
-export interface ChatRequest {
-  userId: number;
-  message: string;
-  conversationId?: number;
-}
-
-export interface ChatResponse {
-  conversationId: number;
-  message: string;
-  timestamp: string;
-}
-
-export interface NewConversationRequest {
-  userId: number;
-  title: string;
-}

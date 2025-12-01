@@ -7,7 +7,6 @@ import AuthPage from './components/AuthPage';
 import Dashboard from './components/Dashboard';
 import Quiz from './components/Quiz';
 import Recommendations from './components/Recommendations';
-import ChatbotPage from './components/ChatbotPage';
 import ProtectedRoute from './components/ProtectedRoute';
 
 const theme = createTheme({
@@ -53,14 +52,6 @@ function AppRoutes() {
         element={
           <ProtectedRoute>
             <Recommendations />
-          </ProtectedRoute>
-        } 
-      />
-      <Route 
-        path="/chatbot" 
-        element={
-          <ProtectedRoute>
-            <ChatbotPage />
           </ProtectedRoute>
         } 
       />

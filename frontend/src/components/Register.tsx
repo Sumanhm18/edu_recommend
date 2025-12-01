@@ -144,44 +144,13 @@ const Register: React.FC<RegisterProps> = ({ onSwitchToLogin }) => {
         justifyContent="center"
         minHeight="100vh"
         py={4}
-        sx={{
-          background: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
-          position: 'relative',
-          '&::before': {
-            content: '""',
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            background: 'radial-gradient(circle at 20% 80%, rgba(79, 172, 254, 0.3) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.15) 0%, transparent 50%)',
-            zIndex: 0,
-          }
-        }}
       >
-        <Card sx={{ 
-          width: '100%', 
-          maxWidth: 400,
-          background: 'rgba(255, 255, 255, 0.95)',
-          backdropFilter: 'blur(20px)',
-          border: '1px solid rgba(255, 255, 255, 0.3)',
-          borderRadius: 4,
-          boxShadow: '0 25px 50px rgba(0, 0, 0, 0.1)',
-          position: 'relative',
-          zIndex: 1,
-        }}>
+        <Card sx={{ width: '100%', maxWidth: 400 }}>
           <CardContent sx={{ p: 4 }}>
-            <Typography variant="h4" component="h1" gutterBottom align="center" sx={{
-              background: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
-              backgroundClip: 'text',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              fontWeight: 700,
-              mb: 1,
-            }}>
-              {step === 'details' ? 'Join Us 🚀' : 'Verify Email 📧'}
+            <Typography variant="h4" component="h1" gutterBottom align="center">
+              {step === 'details' ? 'Register' : 'Verify Email'}
             </Typography>
-            <Typography variant="body2" color="text.secondary" align="center" sx={{ mb: 4, fontSize: '1rem' }}>
+            <Typography variant="body2" color="text.secondary" align="center" sx={{ mb: 3 }}>
               {step === 'details' 
                 ? 'Create your account to get started' 
                 : `Enter the OTP sent to ${formData.email}`
@@ -189,25 +158,13 @@ const Register: React.FC<RegisterProps> = ({ onSwitchToLogin }) => {
             </Typography>
 
             {error && (
-              <Alert severity="error" sx={{ 
-                mb: 3,
-                borderRadius: 2,
-                '& .MuiAlert-icon': {
-                  color: '#f44336'
-                }
-              }}>
+              <Alert severity="error" sx={{ mb: 2 }}>
                 {error}
               </Alert>
             )}
 
             {success && (
-              <Alert severity="success" sx={{ 
-                mb: 3,
-                borderRadius: 2,
-                '& .MuiAlert-icon': {
-                  color: '#4caf50'
-                }
-              }}>
+              <Alert severity="success" sx={{ mb: 2 }}>
                 {success}
               </Alert>
             )}
@@ -223,18 +180,6 @@ const Register: React.FC<RegisterProps> = ({ onSwitchToLogin }) => {
                   required
                   autoComplete="name"
                   placeholder="Enter your full name"
-                  sx={{
-                    '& .MuiOutlinedInput-root': {
-                      borderRadius: 2,
-                      transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                      '&:hover': {
-                        boxShadow: '0 4px 20px rgba(79, 172, 254, 0.1)',
-                      },
-                      '&.Mui-focused': {
-                        boxShadow: '0 4px 20px rgba(79, 172, 254, 0.2)',
-                      }
-                    }
-                  }}
                 />
                 <TextField
                   fullWidth
@@ -245,18 +190,6 @@ const Register: React.FC<RegisterProps> = ({ onSwitchToLogin }) => {
                   required
                   autoComplete="email"
                   placeholder="Enter your email address"
-                  sx={{
-                    '& .MuiOutlinedInput-root': {
-                      borderRadius: 2,
-                      transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                      '&:hover': {
-                        boxShadow: '0 4px 20px rgba(79, 172, 254, 0.1)',
-                      },
-                      '&.Mui-focused': {
-                        boxShadow: '0 4px 20px rgba(79, 172, 254, 0.2)',
-                      }
-                    }
-                  }}
                 />
                 <TextField
                   fullWidth
@@ -310,27 +243,9 @@ const Register: React.FC<RegisterProps> = ({ onSwitchToLogin }) => {
                   variant="contained"
                   size="large"
                   disabled={otpLoading}
-                  sx={{ 
-                    mt: 4, 
-                    mb: 3,
-                    py: 1.5,
-                    borderRadius: 2,
-                    background: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
-                    fontWeight: 600,
-                    fontSize: '1.1rem',
-                    textTransform: 'none',
-                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                    '&:hover': {
-                      background: 'linear-gradient(135deg, #3d8bfe 0%, #00d4ff 100%)',
-                      transform: 'translateY(-2px)',
-                      boxShadow: '0 10px 25px rgba(79, 172, 254, 0.4)',
-                    },
-                    '&:disabled': {
-                      background: 'linear-gradient(135deg, #cccccc 0%, #999999 100%)',
-                    }
-                  }}
+                  sx={{ mt: 3, mb: 2 }}
                 >
-                  {otpLoading ? <CircularProgress size={24} color="inherit" /> : 'Send OTP'}
+                  {otpLoading ? <CircularProgress size={24} /> : 'Send OTP'}
                 </Button>
               </form>
             ) : (
@@ -351,48 +266,16 @@ const Register: React.FC<RegisterProps> = ({ onSwitchToLogin }) => {
                   variant="contained"
                   size="large"
                   disabled={loading}
-                  sx={{ 
-                    mt: 4, 
-                    mb: 3,
-                    py: 1.5,
-                    borderRadius: 2,
-                    background: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
-                    fontWeight: 600,
-                    fontSize: '1.1rem',
-                    textTransform: 'none',
-                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                    '&:hover': {
-                      background: 'linear-gradient(135deg, #3d8bfe 0%, #00d4ff 100%)',
-                      transform: 'translateY(-2px)',
-                      boxShadow: '0 10px 25px rgba(79, 172, 254, 0.4)',
-                    },
-                    '&:disabled': {
-                      background: 'linear-gradient(135deg, #cccccc 0%, #999999 100%)',
-                    }
-                  }}
+                  sx={{ mt: 3, mb: 2 }}
                 >
-                  {loading ? <CircularProgress size={24} color="inherit" /> : 'Complete Registration'}
+                  {loading ? <CircularProgress size={24} /> : 'Complete Registration'}
                 </Button>
                 <Button
                   fullWidth
                   variant="outlined"
                   size="large"
                   onClick={handleBackToDetails}
-                  sx={{ 
-                    mb: 2,
-                    py: 1.5,
-                    borderRadius: 2,
-                    borderColor: '#4facfe',
-                    color: '#4facfe',
-                    fontWeight: 600,
-                    textTransform: 'none',
-                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                    '&:hover': {
-                      borderColor: '#3d8bfe',
-                      backgroundColor: 'rgba(79, 172, 254, 0.1)',
-                      transform: 'translateY(-1px)',
-                    }
-                  }}
+                  sx={{ mb: 2 }}
                 >
                   Back to Details
                 </Button>
@@ -400,7 +283,7 @@ const Register: React.FC<RegisterProps> = ({ onSwitchToLogin }) => {
             )}
 
             <Box textAlign="center">
-              <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+              <Typography variant="body2">
                 Already have an account?{' '}
                 <Link
                   component="button"
@@ -408,18 +291,6 @@ const Register: React.FC<RegisterProps> = ({ onSwitchToLogin }) => {
                   onClick={(e) => {
                     e.preventDefault();
                     onSwitchToLogin();
-                  }}
-                  sx={{
-                    background: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
-                    backgroundClip: 'text',
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
-                    fontWeight: 600,
-                    textDecoration: 'none',
-                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                    '&:hover': {
-                      textDecoration: 'underline',
-                    }
                   }}
                 >
                   Login here
