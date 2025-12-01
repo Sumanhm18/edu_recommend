@@ -31,3 +31,9 @@ build/
 
 ### VS Code ###
 .vscode/
+*.json
+*.log
+*.sh
+/mobile/*
+/node_modules/
+/target/
